@@ -32,7 +32,6 @@ const logout = () => {
 const getResultRegister = ({commit}, callback = () => {}) => {
   userService.getResultRegister(
     res => {
-      console.log(res)
       commit('setResultRegister', res.data.result)
       callback()
     },
@@ -51,6 +50,9 @@ const addResultRegister = ({commit}, newSubject) => {
           })
   }, e => handleErrors.resolveCommonErrors(e))
 }
+const addResultRegisterLocal = ({commit}, newSubject) => {
+    commit('addResultRegisterLocal', newSubject)
+}
 
 const deleteSubject = ({commit}, codeSubject) => {
   userService.deleteSubject(codeSubject, () => {
@@ -68,7 +70,9 @@ const deleteSubject = ({commit}, codeSubject) => {
 const getListPageRegister = ({commit}, page) => {
     userService.getListPageRegister(
     page,
-    res => commit('setListRegister',res.data.result),
+      res => {
+      commit('setListRegister',res.data)
+    },
     e => handleErrors.resolveCommonErrors(e)
   )
 }
@@ -78,6 +82,7 @@ export default {
   logout,
   getResultRegister,
   addResultRegister,
+  addResultRegisterLocal,
   deleteSubject,
   getListPageRegister
 }

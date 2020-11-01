@@ -19,6 +19,11 @@ const routes = [
     path: '/ket-qua-dang-ky-hoc',
     name: 'result-register-learn',
     component: () => import('@/pages/student/Result')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: () => import('@/pages/login')
   }
 ]
 

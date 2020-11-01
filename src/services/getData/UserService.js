@@ -20,7 +20,7 @@ class UserService {
 
     async getResultRegister(onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.get('user'))
+            onSuccess(await httpHandler.get('student'))
         } catch (err) {
             onFailure(err)
         }
@@ -43,7 +43,7 @@ class UserService {
 
     async getListPageRegister(page, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.get(`list-register?page=${page}`))
+            onSuccess(await httpHandler.get(`class?page=${page}`))
         } catch (err) {
             onFailure(err)
         }

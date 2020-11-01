@@ -4,6 +4,9 @@ const setResultRegister = (state, resultRegister) => {
 const addResultRegister = (state, newSubject) => {
     state.resultRegister = [...state.resultRegister, newSubject]
 }
+const addResultRegisterLocal = (state, newSubject) => {
+    state.resultRegister =  newSubject
+}
 
 const removeResultRegister = (state, removeSubject) => {
     state.resultRegister = state.resultRegister.filters(subject => {
@@ -11,7 +14,7 @@ const removeResultRegister = (state, removeSubject) => {
     })
 }
 const setListRegister = (state, listRegister) => {
-    state.listRegister = listRegister
+    state.listRegister = listRegister.map(data => ({...data, time: data.start_class + '-' + data.end_class}))
 }
 
 const setNameUser = (state, nameUser) => {
@@ -28,6 +31,7 @@ export default {
     setListRegister,
     setResultRegister,
     setNameUser,
-    setRoleUser
+    setRoleUser,
+    addResultRegisterLocal
 }
 

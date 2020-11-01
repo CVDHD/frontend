@@ -1,14 +1,18 @@
 <template>
+    <div>
     <div class="flex-container">
         <router-link to ='/' >E-learning</router-link>
         <router-link to ='/dang-ky-hoc' >Đăng ký học</router-link>
         <router-link to ='/ket-qua-dang-ky-hoc' >Kết quả đăng ký học</router-link>
+        <router-link to ='/thong-bao' >Thông báo</router-link>
         <div class="search">
            
                 <input v-if="showSearch" type="search" class="form-control">
             
            <img @click="search" src="@/assets/search.png" alt="search" />
         </div>
+        
+    </div>
     </div>
 </template>
 
@@ -38,16 +42,14 @@
         align-items: center;
         justify-content: space-around;
         height: 50px;
-        background-color: red;
         & a {
             color: #ffff;
             margin: 10px;
-            padding: 20px;
+            padding: 10px 25px;
             font-size: 20px;
-            flex-grow: 1;
+            max-width: 500px;
             font-weight: bold;
             text-decoration: none;
-            max-width: 250px;
             &.router-link-exact-active{
                  color: #f0ec22;
                  text-decoration: none;
@@ -59,7 +61,7 @@
         & div.search {
              display: flex;
              margin: 10px;
-             flex-grow: 4;
+             max-width: 500px;
              margin-left: auto;  
              justify-content: flex-end;  
              height: 40px;        
@@ -69,7 +71,7 @@
                 border: none;
                 font-size: 20px;
                 font-weight: bold;
-                background-color: #40a9ff;
+                background-color: #f2f4f7;
                 padding-left: 20px;
                 border-radius: 7px;
                 border-bottom-left-radius: 7px;
