@@ -1,33 +1,63 @@
 <template>
     <div>
     <div class="flex-container">
-        <router-link to ='/' >E-learning</router-link>
-        <router-link to ='/dang-ky-hoc' >Đăng ký học</router-link>
-        <router-link to ='/ket-qua-dang-ky-hoc' >Kết quả đăng ký học</router-link>
-        <router-link to ='/thong-bao' >Thông báo</router-link>
-        <div class="search">
-           
-                <input v-if="showSearch" type="search" class="form-control">
-            
-           <img @click="search" src="@/assets/search.png" alt="search" />
+        <div>
+            <img src="@/assets/logo.png" alt="">
         </div>
-        
+        <div>
+            <router-link to ='/' >E-learning</router-link>
+            <router-link to ='/dang-ky-hoc' >Đăng ký học</router-link>
+            <router-link to ='/ket-qua-dang-ky-hoc' >Kết quả đăng ký học</router-link>
+            <router-link to ='/thong-bao' >Thông báo</router-link>
+            <a-dropdown v-model="visible">
+                <a class="ant-dropdown-link" @click="e => e.preventDefault()">
+                <a-icon 
+                    :style="{fontSize: 20, color: 'red'}"
+                    type="smile" />
+                </a>
+                <a-menu slot="overlay" @click="handleMenuClick">
+                <a-menu-item @click="logout" key="1">
+                    Đăng xuất
+                </a-menu-item>
+                <a-menu-item key="2">
+                    Đổi mật khẩu
+                </a-menu-item>
+                <a-menu-item key="3">
+                    Thông tin cá nhân
+                </a-menu-item>
+                </a-menu>
+            </a-dropdown>
+        </div>
     </div>
     </div>
 </template>
 
 <script>
+import router from '../../router'
+import Token from '../../services/cookie_local_storage/Token'
     export default {
         name: 'NavBar',
         data () {
             return {
-                showSearch: false
+                showSearch: false,
+                 visible: false,
             }
         },
-
+        components:{
+        },
         methods:  {
             search(){
                 this.showSearch = !this.showSearch
+            },
+            handleMenuClick(e) {
+                if (e.key === '3') {
+                    this.visible = false;
+                }
+            },
+            logout(){
+                 Token.clearToken()
+                router.push('/login')
+
             }
         }
     }
@@ -35,13 +65,16 @@
 
 <style lang="scss" scoped>
     .flex-container {
-        margin-top: 50px;
+        padding-top: 50px;
+        padding-bottom: 50px;
         display: flex;
         font-family: Simplifica;
         text-align: center;
         align-items: center;
         justify-content: space-around;
         height: 50px;
+        width: 100%;
+        position: sticky;
         & a {
             color: #ffff;
             margin: 10px;
@@ -56,33 +89,6 @@
             }
             &:hover{
                 color: #f0ec22;
-            }
-        }
-        & div.search {
-             display: flex;
-             margin: 10px;
-             max-width: 500px;
-             margin-left: auto;  
-             justify-content: flex-end;  
-             height: 40px;        
-            & input{
-                width: 500px;
-                transition: .5s;
-                border: none;
-                font-size: 20px;
-                font-weight: bold;
-                background-color: #f2f4f7;
-                padding-left: 20px;
-                border-radius: 7px;
-                border-bottom-left-radius: 7px;
-                 &:focus {
-                 outline: none;
-                 border:2px solid #f0ec22;
-             }
-            }
-            & img{
-                width: 50px;
-                cursor: pointer;
             }
         }
     }

@@ -24,9 +24,10 @@ class HandleErrors {
           })
           break
         default:
+          console.log(e)
           swalAlert.open({
           title: title,
-          text: e.response.status,
+          text: e.response.message,
           icon: 'error'
         }, () => {})
       }

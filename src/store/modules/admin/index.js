@@ -7,9 +7,7 @@ const state = {
     role: '',
     resultRegister: [],
     listRegister: [],
-    loading: false
-    
-    
+    loading: false  
 }
 
 export default {

@@ -1,14 +1,6 @@
 <template>
     <div id="body">
-        <div id="banner">
-            <img src="@/assets/banner.jpg" alt="">
-        </div>
-        <div id="alert">
-           <img src="@/assets/banner.jpg" alt="">
-           <img src="@/assets/banner.jpg" alt="">
-           <img src="@/assets/banner.jpg" alt="">
-           <img src="@/assets/banner.jpg" alt="">
-        </div>
+        
     </div>
 </template>
 

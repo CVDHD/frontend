@@ -20,14 +20,14 @@ class UserService {
 
     async getResultRegister(onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.get('student'))
+            onSuccess(await httpHandler.get('show'))
         } catch (err) {
             onFailure(err)
         }
     }
     async addResultRegister(subject, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.post('result-register', subject))
+            onSuccess(await httpHandler.post('enroll', subject))
         } catch (err) {
             onFailure(err)
         }
@@ -35,7 +35,7 @@ class UserService {
 
     async deleteSubject(code_subject, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.delete(`code-subject?id=${code_subject}`))
+            onSuccess(await httpHandler.post('delete', code_subject))
         } catch (err) {
             onFailure(err)
         }
@@ -43,13 +43,20 @@ class UserService {
 
     async getListPageRegister(page, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.get(`class?page=${page}`))
+            onSuccess(await httpHandler.get(`class/${page}`))
         } catch (err) {
             onFailure(err)
         }
     }
 
-    async changePassword(payload, onSuccess, onFailure) {
+    async changePassword(formdata, onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.postFile('change-password', formdata, {'Content-Type': 'multipart/form-data'}))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+    async postCsvFile(payload, onSuccess, onFailure) {
         try {
             onSuccess(await httpHandler.post('change-password', payload))
         } catch (err) {

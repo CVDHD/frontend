@@ -10,7 +10,6 @@
 import Body from '@/components/student/Home/Body'
 import Navbar from '@/components/common/Navbar'
 export default {
-  name: 'Home',
   components: {
     Body,
     Navbar

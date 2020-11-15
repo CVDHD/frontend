@@ -38,8 +38,8 @@ import {mapActions} from 'vuex'
         data(){
             return {
                 status: true,
-                username: '',
-                passwd: ''
+                username: '17020908',
+                passwd: 'namduong'
             }
         },
         computed: {
@@ -56,8 +56,8 @@ import {mapActions} from 'vuex'
             }),
             login(){
                 this.getListPageRegister({
-                    username: this.username, 
-                    passwd: this.passwd
+                    id: this.username, 
+                    password: this.passwd
                     })
             }
         },

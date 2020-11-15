@@ -1,15 +1,32 @@
 <template>
     <div>
+        <!-- <Header /> -->
         <Navbar />
         <div id="register">
-            <h1 class = "title-1">Danh sách môn học đăng ký</h1>
+            <div class="content">
+                <h1 class = "title-1">Danh sách môn học đăng ký</h1>
+                <a-select default-value="lucy" style="width: 120px" >
+                    <a-select-option value="jack">
+                        Tất cả
+                    </a-select-option>
+                    <a-select-option value="lucy">
+                        CNTT
+                    </a-select-option>
+                    <a-select-option value="disabled">
+                       DTVT
+                    </a-select-option>
+                    <a-select-option value="Yiminghe">
+                        CK
+                    </a-select-option>
+                </a-select>
+                 <FileUpload />
+            </div>
             <div class="table">
-                <TableRegister 
+                <TableRegisterAdmin 
                     :dataListRegister="listRegister" 
                     :eventSelect="addResultRegister" 
                     :eventSelectLocal="addResultRegisterLocal" 
                     :dataList="listResultRegister"
-
                 />
                <br>
                <br>
@@ -17,38 +34,32 @@
                      <a-pagination :default-current="1" :total="200" @change="onChange" />
                 </div>
             </div>
-            <h1 class = "title-2">Kết qủa đăng ký học hiện tại</h1>
-            <div class="table1">
-                <TableResult 
-                    :dataList="listResultRegister" 
-                    :eventSelect="deleteSubject" 
-                    :getResult="getResultRegister"
-                    :eventSelectLocal="addResultRegisterLocal"
-
-                />
-            </div>
         </div>
     </div>
 </template>
 
 <script>
     import {mapActions, mapGetters} from 'vuex'
-    import TableRegister from '@/components/common/TableRegister'
-    import TableResult from '@/components/common/TableResult'
+    import TableRegisterAdmin from '@/components/common/TableRegisterAdmin'
     import Navbar from '@/components/common/Navbar'
+    import FileUpload from '@/components/common/FileUpload'
     export default {
-        name: "Register",
         data(){
             return {
+                isLoading: true,
                 currentPage: 1,
                 loadAddSubject: false
             }
+        },
+        components: {
+            TableRegisterAdmin,
+            Navbar,
+            FileUpload
         },
         computed: {
             ...mapGetters({
                 listResultRegister: 'userModule/getResultRegister',
                 listRegister: 'userModule/getListRegister',
-                loading: 'userModule/getLoading'
         })
 
         },
@@ -61,19 +72,16 @@
                 getListPageRegister: 'userModule/getListPageRegister',
             }),
             async onChange(current) {
-                this.currentPage = current
-                this.getListPageRegister(this.currentPage)
+            this.currentPage = current
+            this.getListPageRegister(this.currentPage)
             },
         },
-        components: {
-            TableRegister,
-            Navbar,
-            TableResult,
-        },
-        async mounted() {
-          await this.getListPageRegister(this.currentPage)
-          await this.getResultRegister()
-        },
+        async created() {
+            await this.getListPageRegister(this.currentPage)
+            await this.getResultRegister()
+        }
+
+        
     }
 </script>
 
@@ -82,6 +90,11 @@
         min-height: 63vh;
         width: 90%;
         margin: auto;
+        .content{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
         .title-1, .title-2{
             font-weight: bold;
             color: aliceblue;
@@ -92,16 +105,12 @@
         }
         .table{
             margin-bottom: 3em;
-            position: relative;
-            min-height: 500px;
             .pagination{
                 float: right;
             }
         }
         .table1{
-            min-height: 500px;
             margin-bottom: 0em;
-            position: relative;
         }
     }
 </style>

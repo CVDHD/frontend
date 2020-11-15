@@ -17,6 +17,14 @@ class HttpHandler {
       config
     })
   }
+  postFile (url, payload, headers) {
+    return InstanceAxios()({
+      method: 'post',
+      url: url,
+      data: payload,
+      headers
+    })
+  }
     
   put (url, payload, config = {}) {
     return InstanceAxios()({

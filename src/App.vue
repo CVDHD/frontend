@@ -1,14 +1,41 @@
 <template>
   <div id='container'>
+      <loading 
+        :active.sync="loading" 
+        :is-full-page="fullPage"
+        :opacity="0.2"
+        color="white"
+        loader="dots"
+        backgroundColor="black"
+        :width="200"
+        :height="200"
+      />
       <router-view/>
   </div>
 </template>
 <script>
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
+import {mapGetters} from 'vuex'
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    Loading
+  },
+  data() {
+      return {
+          fullPage: true
+      }
+  },
+  computed: {
+      ...mapGetters({
+          loading: 'userModule/getLoading'
+    })
+  },
 }
 </script>
-<style scoped>
+<style >
+
  #container{
    width: 100%;
    padding: 0;
