@@ -1,7 +1,7 @@
 <template>
   <div id='container'>
       <loading 
-        :active.sync="loading" 
+        :active.sync="loadingCommon" 
         :is-full-page="fullPage"
         :opacity="0.2"
         color="white"
@@ -29,9 +29,12 @@ export default {
   },
   computed: {
       ...mapGetters({
-          loading: 'userModule/getLoading'
+          loadingCommon: 'commonModule/getLoading'
     })
   },
+  mounted(){
+    console.log('BASE URL IS', process.env)
+  }
 }
 </script>
 <style >

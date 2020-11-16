@@ -35,7 +35,7 @@ class UserService {
 
     async deleteSubject(code_subject, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.post('delete', code_subject))
+            onSuccess(await httpHandler.delete('delete', code_subject))
         } catch (err) {
             onFailure(err)
         }
@@ -58,7 +58,7 @@ class UserService {
     }
     async postCsvFile(payload, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.post('change-password', payload))
+            onSuccess(await httpHandler.post('lessions/import', payload))
         } catch (err) {
             onFailure(err)
         }

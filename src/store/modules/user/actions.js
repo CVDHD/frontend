@@ -31,24 +31,24 @@ const logout = () => {
 }
 
 const getResultRegister = ({ commit }) => {
-  commit('loadingTrue')
+  commit('commonModule/loadingTrue', null, { root: true })
   userService.getResultRegister(
     res => {
-      commit('loadingFalse')
+      commit('commonModule/loadingFalse', null, { root: true })
       commit('setResultRegister', res.data)
     },
     e => {
-      
+      commit('commonModule/loadingFalse', null, { root: true })
       handleErrors.resolveCommonErrors(e)
     }
   )
 }
 
 const addResultRegister = ({ commit }, newSubject) => {
-  commit('loadingTrue')
+  commit('commonModule/loadingTrue',  null, { root: true })
   userService.addResultRegister(newSubject.class_id, () => {
     commit('addResultRegisterLocal', newSubject.class_id)
-    commit('loadingFalse')
+    commit('commonModule/loadingFalse',null, { root: true })
       swalAlert.open({
             title: 'Đăng ký thành công!',
             text: `Bạn đã đăng ký thành công môn học ${newSubject.name}`,
@@ -56,14 +56,14 @@ const addResultRegister = ({ commit }, newSubject) => {
           }, () => {
           })
   }, e => {
-      commit('loadingFalse')
+      commit('commonModule/loadingFalse',null, { root: true })
     handleErrors.resolveCommonErrors(e)
   })
 }
 const fileUploadCsv = ({ commit }, formdata) => {
-  commit('loadingTrue')
+  commit('commonModule/loadingTrue', null, {root: true})
   userService.postCsvFile(formdata, () => {
-    commit('loadingFalse')
+     commit('commonModule/loadingFalse', null, {root: true})
       swalAlert.open({
             title: 'Upload thành công!',
             text: 'Bạn đã upload thành công thời khóa biểu',
@@ -71,16 +71,16 @@ const fileUploadCsv = ({ commit }, formdata) => {
           }, () => {
           })
   }, e => {
-    commit('loadingFalse')
+      commit('commonModule/loadingFalse', null, {root: true})
     handleErrors.resolveCommonErrors(e)
   })
 }
 
 const deleteSubject = ({ commit }, codeSubject) => {
-  commit('loadingTrue')
+  commit('commonModule/loadingTrue')
   userService.deleteSubject(codeSubject, () => {
     commit('removeResultRegisterLocal', codeSubject)
-    commit('loadingFalse')
+    commit('commonModule/loadingFalse', null, {root: true})
       swalAlert.open({
             title: 'Hủy thành công!',
             text: `Bạn đã hủy thành công môn học ${codeSubject}`,
@@ -88,22 +88,22 @@ const deleteSubject = ({ commit }, codeSubject) => {
           }, () => {
           })
   }, e => {
-      commit('loadingFalse')
+      commit('commonModule/loadingFalse', null, {root: true})
     handleErrors.resolveCommonErrors(e)
   })
 }
 
 
 const getListPageRegister = ({ commit }, page) => {
-  commit('loadingTrue')
+  commit('commonModule/loadingTrue', null, {root: true})
     userService.getListPageRegister(
     page,
       res => {
         commit('setListRegister', res.data)
-        commit('loadingFalse')
+        commit('commonModule/loadingFalse', null, {root: true})
     },
       e => {
-        commit('loadingFalse')
+        commit('commonModule/loadingFalse', null, {root: true})
         handleErrors.resolveCommonErrors(e)
       }
   )

@@ -13,30 +13,21 @@ const setListRegister = (state, listRegister) => {
     state.listRegister = listRegister ? listRegister.map(data => ({...data, time: data.start_class + '-' + data.end_class})): null
 }
 
-const setNameUser = (state, nameUser) => {
-    state.name = nameUser
+const editListRegister = (state, editRegister) => {
+    state.listRegister = state.listRegister.map(register => {
+        if (editRegister.class_id == register.class_id) return editRegister
+        return register
+    }
+    )
 }
 
-const setRoleUser = (state, roleUser) => {
-    state.role = roleUser
-}
 
-const loadingTrue = (state) => {
-    state.loading = true
-}
-
-const loadingFalse = (state) => {
-    state.loading = false
-}
 
 export default {
     removeResultRegisterLocal,
     setListRegister,
     setResultRegister,
-    setNameUser,
-    setRoleUser,
     addResultRegisterLocal,
-    loadingFalse,
-    loadingTrue
+    editListRegister
 }
 

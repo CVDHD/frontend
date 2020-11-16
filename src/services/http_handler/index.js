@@ -35,10 +35,12 @@ class HttpHandler {
     })
   }
 
-  delete (url) {
+  delete (url, payload, config={}) {
     return InstanceAxios()({
       method: 'delete',
-      url: url
+      url: url,
+      config,
+      data: payload
     })
   }
 }
