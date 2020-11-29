@@ -17,12 +17,12 @@ class HttpHandler {
       config
     })
   }
-  postFile (url, payload, headers) {
+  postFile (url, payload) {
     return InstanceAxios()({
       method: 'post',
       url: url,
       data: payload,
-      headers
+      headers: {'Content-Type': 'multipart/form-data' }
     })
   }
     
@@ -37,7 +37,7 @@ class HttpHandler {
 
   delete (url, payload, config={}) {
     return InstanceAxios()({
-      method: 'delete',
+      method: 'post',
       url: url,
       config,
       data: payload

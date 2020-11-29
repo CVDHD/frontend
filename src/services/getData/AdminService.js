@@ -1,18 +1,17 @@
 import httpHandler from '../http_handler'
 
 class AdminService {
-//lay tat ca danh sach dang ky hoc
-    async getRegister(onSuccess, onFailure, data) {
+
+    async getRegister(onSuccess, onFailure, page) {
         try {
-            onSuccess(await httpHandler.get('show',data ))
+             onSuccess(await httpHandler.get(`class/${page}`))
         } catch (err) {
             onFailure(err)
         }
     }
-//them danh sach dang ky hoc
     async addRegister(subject, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.post('enroll', subject))
+            onSuccess(await httpHandler.post('add-register', subject))
         } catch (err) {
             onFailure(err)
         }
@@ -84,7 +83,7 @@ class AdminService {
     }
 
    //lay danh sach giang vien
-    async getListTeacher(onSuccess, onFailure) {
+    async getListTeachers(onSuccess, onFailure) {
         try {
             onSuccess(await httpHandler.get('teachers',))
         } catch (err) {
@@ -93,7 +92,7 @@ class AdminService {
     }
 
      //lay danh sach mon hoc
-    async getListSubject(onSuccess, onFailure) {
+    async getListSubjects(onSuccess, onFailure) {
         try {
             onSuccess(await httpHandler.get('subjects',))
         } catch (err) {
@@ -101,9 +100,16 @@ class AdminService {
         }
     }
      //lay danh sach phong hoc
-    async getListRoom(onSuccess, onFailure) {
+    async getListRooms(onSuccess, onFailure) {
         try {
             onSuccess(await httpHandler.get('rooms',))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+    async importFileCsv(formData, onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.postFile('upload', formData))
         } catch (err) {
             onFailure(err)
         }

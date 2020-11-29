@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '@/pages/student/Home.vue'
-import HomeAdmin from '@/pages/admin/Home.vue'
+import Home from '@/pages/Home'
 import Token from '../services/cookie_local_storage/Token'
 Vue.use(VueRouter)
 
@@ -9,7 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Token.getRole() === 'admin' ? HomeAdmin : Home
+    component: Home
   },
   {
     path: '/dang-ky-hoc',

@@ -2,30 +2,35 @@
     <div>
         <Navbar />
         <div id="register">
-            <h1 class = "title-1">Danh sách môn học đăng ký</h1>
-            <div class="table">
-                <TableRegister 
-                    :dataListRegister="listRegister" 
-                    :eventSelect="addResultRegister" 
-                    :eventSelectLocal="addResultRegisterLocal" 
-                    :dataList="listResultRegister"
+            <button @click="changeTable">{{table ? "Danh sách đăng ký học hiện tại" : "Đăng ký học"}}</button>
+            <div v-if="table">
+                <h1 class = "title-1">Danh sách môn học đăng ký</h1>
+                <div class="table">
+                    <TableRegister 
+                        :dataListRegister="listRegister" 
+                        :eventSelect="addResultRegister" 
+                        :eventSelectLocal="addResultRegisterLocal" 
+                        :dataList="listResultRegister"
 
-                />
+                    />
                <br>
                <br>
                 <div class="pagination">
                      <a-pagination :default-current="1" :total="200" @change="onChange" />
                 </div>
             </div>
-            <h1 class = "title-2">Kết qủa đăng ký học hiện tại</h1>
-            <div class="table1">
-                <TableResult 
-                    :dataList="listResultRegister" 
-                    :eventSelect="deleteSubject" 
-                    :getResult="getResultRegister"
-                    :eventSelectLocal="addResultRegisterLocal"
+            </div>
+            <div v-else>
+                <h1 class = "title-2">Kết qủa đăng ký học hiện tại</h1>
+                <div class="table1">
+                    <TableResult 
+                        :dataList="listResultRegister" 
+                        :eventSelect="deleteSubject" 
+                        :getResult="getResultRegister"
+                        :eventSelectLocal="addResultRegisterLocal"
 
-                />
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -41,7 +46,8 @@
         data(){
             return {
                 currentPage: 1,
-                loadAddSubject: false
+                loadAddSubject: false,
+                table: true
             }
         },
         computed: {
@@ -64,6 +70,10 @@
                 this.currentPage = current
                 this.getListPageRegister(this.currentPage)
             },
+            async changeTable(){
+                this.table = !this.table
+                if(this.table) this.getListPageRegister(this.currentPage)
+            }
         },
         components: {
             TableRegister,
@@ -72,7 +82,6 @@
         },
         async mounted() {
           await this.getListPageRegister(this.currentPage)
-          await this.getResultRegister()
         },
     }
 </script>
@@ -82,10 +91,24 @@
         min-height: 63vh;
         width: 90%;
         margin: auto;
+        button{
+            float: right;
+            padding: 10px;
+            background-color: rgb(40, 154, 248);
+            color: wheat;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: 1px solid yellow;
+            border-radius: 30px;
+            cursor: pointer;
+            &:focus{
+                outline: none;
+            }
+        }
         .title-1, .title-2{
             font-weight: bold;
             color: aliceblue;
-            margin: 80px 80px;
+            margin: 40px 80px 40px 80px;
         }
         .title2{
             text-align: left;

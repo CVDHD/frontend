@@ -1,17 +1,24 @@
-const getResultRegister = state => state.resultRegister
+const getResultRegisters = state => state.resultRegisters
 
 const getInfo = state => state.name
 
-const getListRegister = state => state.listRegister
+const getListRegisters = state => state.listRegisters
 
 const getRole = state => state.role
 
-const getLoading = state => state.loading
+const getListRooms = state => state.listRooms
+
+const getListTeachers = state => state.listTeachers
+
+const getListSubjects = state => state.listSubjects
+
 
 export default {
-    getResultRegister,
+    getResultRegisters,
     getInfo,
-    getListRegister,
+    getListRegisters,
     getRole,
-    getLoading
+    getListRooms,
+    getListSubjects,
+    getListTeachers
 }

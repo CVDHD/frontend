@@ -10,6 +10,7 @@ const login = ({commit }, loginForm) => {
     res => {
       localStorage.setToken(res.data.success.token)
       localStorage.setUser(res.data.success.id)
+      localStorage.setRole('student')
       router.push('/')
       commit('setNameUser', res.username)
       commit('setRoleUser', res.role)

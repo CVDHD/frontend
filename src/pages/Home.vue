@@ -7,9 +7,10 @@
   </div>
 </template>
 <script>
-import Body from '@/components/student/Home/Body'
+import Body from '@/components/common/Body'
 import Navbar from '@/components/common/Navbar'
 export default {
+  name: 'Home',
   components: {
     Body,
     Navbar

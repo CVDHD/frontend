@@ -7,7 +7,6 @@ const state = {
     role: '',
     resultRegister: [],
     listRegister: [],
-    loading: false
     
     
 }

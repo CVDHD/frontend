@@ -28,7 +28,7 @@
         <td>{{`${data.start_class} - ${data.end_class}`}}</td>
         <td>Nguyen Van A</td>
         <td class="action">
-            <a-icon  type="save" />
+            <a-icon type="eye" />
             <a-icon type="printer" />
         </td>
       </tr>

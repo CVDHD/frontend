@@ -4,16 +4,14 @@
         <div>
             <img src="@/assets/logo.png" alt="">
         </div>
-        <div>
+        <div class="menu">
             <router-link to ='/' >E-learning</router-link>
             <router-link to ='/dang-ky-hoc' >Đăng ký học</router-link>
             <router-link to ='/ket-qua-dang-ky-hoc' >Kết quả đăng ký học</router-link>
             <router-link to ='/thong-bao' >Thông báo</router-link>
             <a-dropdown v-model="visible">
                 <a class="ant-dropdown-link" @click="e => e.preventDefault()">
-                <a-icon 
-                    :style="{fontSize: 20, color: 'red'}"
-                    type="smile" />
+                <img src="@/assets/person.png" class="person" />
                 </a>
                 <a-menu slot="overlay" @click="handleMenuClick">
                 <a-menu-item @click="logout" key="1">
@@ -75,6 +73,9 @@ import Token from '../../services/cookie_local_storage/Token'
         height: 50px;
         width: 100%;
         position: sticky;
+        .menu{
+            margin-left: 30%;
+        }
         & a {
             color: #ffff;
             margin: 10px;
@@ -85,12 +86,16 @@ import Token from '../../services/cookie_local_storage/Token'
             text-decoration: none;
             &.router-link-exact-active{
                  color: #f0ec22;
-                 text-decoration: none;
+                 border: 1px solid #f0ec22;
+                 border-radius: 20px ;
             }
             &:hover{
                 color: #f0ec22;
             }
         }
+    }
+    .person{
+        width: 80px;
     }
     .fade-enter-active, .fade-leave-active {
         transition: width 5s;

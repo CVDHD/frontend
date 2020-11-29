@@ -13,7 +13,6 @@
     <a-button
       type="primary"
       :disabled="fileList.length === 0"
-      :loading="uploading"
       style="margin-left: 16px"
       @click="handleUpload"
     >
@@ -22,7 +21,7 @@
   </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
+import adminService from '@/services/getData/AdminService'
 export default {
   data() {
     return {
@@ -30,9 +29,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions({
-                postFileCsv: 'userModule/fileUploadCsv',
-    }),
     handleRemove(file) {
       const index = this.fileList.indexOf(file);
       const newFileList = this.fileList.slice();
@@ -44,10 +40,9 @@ export default {
       return false;
     },
     async handleUpload() {
-      const { fileList } = this;
       const formData = new FormData();
-      formData.append('csv', fileList[0])
-      await this.postFileCsv(formData)
+      formData.append('file', this.fileList[0])
+      await adminService.importFileCsv(formData)
     },
   },
 };

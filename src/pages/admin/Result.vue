@@ -43,6 +43,7 @@
                 :getResult="getResultRegister"
                 :eventSelectLocal="getResultRegister"
             />
+            <button class="printAll">Print all</button>
         </div>
     
     </div>
@@ -75,7 +76,6 @@ import Navbar from '@/components/common/Navbar'
             }),
         },
        async created() {
-            // await this.getListPageRegister(this.currentPage)
             await this.getResultRegister()
         }
     }
@@ -90,6 +90,20 @@ import Navbar from '@/components/common/Navbar'
             justify-content: flex-end;
             margin-right: 8%;
             margin-bottom: 100px;
+        }
+        .printAll{
+            margin-top: 50px;
+            float: right;
+            width: 150px;
+            margin-right: 100px;
+            color: wheat;
+            background-color: #1890ff;
+            padding: 10px;
+            font-size: 1.5em;
+            border: 1px solid yellow;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
         }
         h1 {
             margin-top: 50px;

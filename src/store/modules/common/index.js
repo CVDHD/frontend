@@ -4,7 +4,7 @@ import mutations from './mutations'
 const state = {
     name: '',
     role: '',
-    loading: true  
+    loading: false 
 }
 
 export default {

@@ -5,9 +5,12 @@ import mutations from './mutations'
 const state = {
     name: '',
     role: '',
-    resultRegister: [],
-    listRegister: [],
-    loading: false  
+    resultRegisters: [],
+    listRegisters: [],
+    listRooms: [],
+    listTeachers: [],
+    listSubjects: [],
+    
 }
 
 export default {

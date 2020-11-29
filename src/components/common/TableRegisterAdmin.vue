@@ -49,10 +49,20 @@
   </table>
 </template>
 <script>
+import {mapActions, mapGetters} from 'vuex'
 export default {
    data(){
     return {
-      columEdit: null
+      columEdit: null,
+      registerEditAdd:{
+        subject_id: '',
+        name: '',
+        room: '',
+        max: '',
+        teacher: '',
+        day: '',
+        time: ''
+      }
     }
   },
   props:{
@@ -74,18 +84,37 @@ export default {
     }
   },
   methods:{
+    ...mapActions({
+  
+          getlistTeachers: 'adminModule/getListTeachers',
+          getlistSubjects: 'adminModule/getListSubjects',
+          getlistRooms: 'adminModule/getListRooms'
+    }),
+
     async submit(class_id){
        await this.eventSelect({class_id})
     },
+
     isChecked(class_id){
       return this.dataList.findIndex( data => data.class_id === class_id) >= 0
     },
+
     changeEdit(id){
       this.columEdit = id
     }
   },
-  computed:{
-  
+  computed: {
+      ...mapGetters({
+          listTeachers: 'adminModule/getListTeachers',
+          listSubjects: 'adminModule/getListSubjects',
+          listRooms: 'adminModule/getListRooms'
+    })
+
+  },
+  async mounted() {
+      // this.getlistTeachers()
+      // this.getlistSubjects()
+      // this.getlistRooms()
   }
 }
 </script>
@@ -131,9 +160,6 @@ export default {
         
         border-bottom: 1px solid #ffff;
         height: 50px;
-        &:hover{
-          // background-color: rgb(24, 124, 218);
-        }
       }
     }
   }

@@ -28,11 +28,15 @@
                     :eventSelectLocal="addResultRegisterLocal" 
                     :dataList="listResultRegister"
                 />
-               <br>
-               <br>
+                <br>
+                <div class="add">
+                    <a-icon type="plus-circle" class="addIcon"/>
+                </div>
+              
                 <div class="pagination">
                      <a-pagination :default-current="1" :total="200" @change="onChange" />
                 </div>
+                
             </div>
         </div>
     </div>
@@ -78,7 +82,6 @@
         },
         async created() {
             await this.getListPageRegister(this.currentPage)
-            await this.getResultRegister()
         }
 
         
@@ -111,6 +114,15 @@
         }
         .table1{
             margin-bottom: 0em;
+        }
+        .add{
+            
+            text-align: center;
+            .addIcon{
+                font-size: 4em;
+                color: aqua;
+                cursor: pointer;
+            }
         }
     }
 </style>

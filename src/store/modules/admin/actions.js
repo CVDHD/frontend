@@ -80,11 +80,48 @@ const getListPageRegister = ({ commit }, page) => {
       }
   )
 }
+const getListRooms = ({ commit }) => {
+  
+    adminService.getListRooms(
+      res => {
+        commit('setListRooms', res.data)
+    },
+      e => {
+        handleErrors.resolveCommonErrors(e)
+      }
+  )
+}
 
+const getListTeachers = ({ commit }) => {
+  
+    adminService.getListTeachers(
+      res => {
+        commit('setListTeachers', res.data)
+    },
+      e => {
+        handleErrors.resolveCommonErrors(e)
+      }
+  )
+}
+
+const getListSubjects = ({ commit }) => {
+  
+    adminService.getListSubjects(
+      res => {
+        commit('setListSubjects', res.data)
+    },
+      e => {
+        handleErrors.resolveCommonErrors(e)
+      }
+  )
+}
 export default {
   getResultRegister,
   addResultRegister,
   deleteSubject,
   getListPageRegister,
-  fileUploadCsv
+  fileUploadCsv,
+  getListRooms,
+  getListTeachers,
+  getListSubjects,
 }
