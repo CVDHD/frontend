@@ -1,14 +1,7 @@
 import httpHandler from '../http_handler'
 
 class AdminService {
-
-    async getRegister(onSuccess, onFailure, page) {
-        try {
-             onSuccess(await httpHandler.get(`class/${page}`))
-        } catch (err) {
-            onFailure(err)
-        }
-    }
+//them dk hoc
     async addRegister(subject, onSuccess, onFailure) {
         try {
             onSuccess(await httpHandler.post('add-register', subject))
@@ -41,17 +34,17 @@ class AdminService {
         }
     }
 //lay file pdf theo lop
-    async getPdfFileByClass(payload, onSuccess, onFailure) {
+    async getPdfFileByClass(class_id, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.post(`pdf/${payload.class_id}`))
+            onSuccess(await httpHandler.get(`download-class/${class_id}`))
         } catch (err) {
             onFailure(err)
         }
     }
-//lay file pdf theo lop
+//lay file pdf ca
     async getAllPdfFile(onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.post(`pdf`))
+            onSuccess(await httpHandler.get(`download-class/all`))
         } catch (err) {
             onFailure(err)
         }
@@ -59,7 +52,7 @@ class AdminService {
 //them student vao lop hoc dang ky
     async addStudent(payload, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.post(`class/${payload.class_id}`, payload.data))
+            onSuccess(await httpHandler.post(`class/${payload.class_id}`, payload.student_id))
         } catch (err) {
             onFailure(err)
         }
@@ -72,16 +65,6 @@ class AdminService {
             onFailure(err)
         }
     }
-
-//lay tat ca ket qua dang ky hoc
-    async getAllResultRegister(onSuccess, onFailure, data) {
-        try {
-            onSuccess(await httpHandler.get('admin/resullt',data ))
-        } catch (err) {
-            onFailure(err)
-        }
-    }
-
    //lay danh sach giang vien
     async getListTeachers(onSuccess, onFailure) {
         try {
@@ -107,6 +90,7 @@ class AdminService {
             onFailure(err)
         }
     }
+    //upload FIle csv
     async importFileCsv(formData, onSuccess, onFailure) {
         try {
             onSuccess(await httpHandler.postFile('upload', formData))
@@ -114,6 +98,23 @@ class AdminService {
             onFailure(err)
         }
     }
+    //lay dang ky hoc theo trang
+    async getListRegisterClass(class_id, onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.get(`class/${class_id}`))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+
+    async getInfoStudentById(student_id, onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.get(`student/${student_id}`))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+
 
 }
 

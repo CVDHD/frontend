@@ -7,7 +7,7 @@
                    <h3>Giải pháp cho học tập trực tuyến.Hãy cùng chúng tôi đưa E-learning ngày càng phổ biến và rộng rãi hơn</h3>
                </div>
                <div class="button">
-                   <button>Đăng nhập</button>
+                   <button><router-link to ='/login' >Đăng nhập</router-link></button>
                    <button>Đăng ký</button>
                </div>
                <div class="link">
@@ -70,6 +70,9 @@
                         }
                         &:hover{
                             background-color: chartreuse;
+                        }
+                        a{
+                            color: white;
                         }
                     }
                 }

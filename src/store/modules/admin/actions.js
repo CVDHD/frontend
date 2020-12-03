@@ -1,7 +1,7 @@
 import adminService from '../../../services/getData/AdminService'
 import handleErrors from '../../../services/handler_error'
 import swalAlert from '../../../services/swal_alert'
-
+//lay ket qua dang ky hoc
 const getResultRegister = ({ commit }) => {
   commit('loadingTrue')
   adminService.getResultRegister(
@@ -10,20 +10,18 @@ const getResultRegister = ({ commit }) => {
       commit('setResultRegister', res.data)
     },
     e => {
-      
       handleErrors.resolveCommonErrors(e)
     }
   )
 }
-
-const addResultRegister = ({ commit }, newSubject) => {
+//them sinh vien vao lop mon hoc
+const addStudentToClass = ({ commit }, data) => {
   commit('loadingTrue')
-  adminService.addResultRegister(newSubject.class_id, () => {
-    commit('addResultRegisterLocal', newSubject.class_id)
+  adminService.addStudent(data, () => {
     commit('loadingFalse')
       swalAlert.open({
             title: 'Đăng ký thành công!',
-            text: `Bạn đã đăng ký thành công môn học ${newSubject.name}`,
+            text: `Bạn đã đăng ký thành công môn học`,
             icon: 'success'
           }, () => {
           })
@@ -32,6 +30,24 @@ const addResultRegister = ({ commit }, newSubject) => {
     handleErrors.resolveCommonErrors(e)
   })
 }
+//xoa dang ky hoc cua sinh vien
+const removeStudentFromClass = ({ commit }, data) => {
+  commit('loadingTrue')
+  adminService.removeStudent(data, () => {
+    commit('loadingFalse')
+      swalAlert.open({
+            title: 'Đăng ký thành công!',
+            text: `Bạn đã đăng ký thành công môn học`,
+            icon: 'success'
+          }, () => {
+          })
+  }, e => {
+      commit('loadingFalse')
+    handleErrors.resolveCommonErrors(e)
+  })
+}
+
+//upload file tkb csv
 const fileUploadCsv = ({ commit }, formdata) => {
   commit('loadingTrue')
   adminService.postCsvFile(formdata, () => {
@@ -48,9 +64,9 @@ const fileUploadCsv = ({ commit }, formdata) => {
   })
 }
 
-const deleteSubject = ({ commit }, codeSubject) => {
+const deleteRegister = ({ commit }, codeSubject) => {
   commit('loadingTrue')
-  adminService.deleteSubject(codeSubject, () => {
+  adminService.deleteRegister(codeSubject, () => {
     commit('removeResultRegisterLocal', codeSubject)
     commit('loadingFalse')
       swalAlert.open({
@@ -117,11 +133,12 @@ const getListSubjects = ({ commit }) => {
 }
 export default {
   getResultRegister,
-  addResultRegister,
-  deleteSubject,
+  addStudentToClass,
+  deleteRegister,
   getListPageRegister,
   fileUploadCsv,
   getListRooms,
   getListTeachers,
   getListSubjects,
+  removeStudentFromClass
 }
