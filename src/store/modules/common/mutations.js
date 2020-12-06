@@ -13,11 +13,15 @@ const loadingTrue = (state) => {
 const loadingFalse = (state) => {
     state.loading = false
 }
+const setTotalRow = (state, totalRow) => {
+    state.totalRow = totalRow
+}
 
 export default {
     setNameUser,
     setRoleUser,
     loadingFalse,
-    loadingTrue
+    loadingTrue,
+    setTotalRow
 }
 

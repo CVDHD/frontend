@@ -39,11 +39,10 @@
             </div>
             <TableResultAdmin 
                 :dataList="listResultRegister" 
-                :eventSelect="deleteSubject" 
                 :getResult="getResultRegister"
                 :eventSelectLocal="getResultRegister"
             />
-            <button class="printAll">Print all</button>
+            <button class="printAll" @click="getAllPdf">Print all</button>
         </div>
     
     </div>
@@ -73,6 +72,7 @@ import Navbar from '@/components/common/Navbar'
         methods: {
             ...mapActions({
                 getResultRegister: 'userModule/getResultRegister',
+                getAllPdf: 'adminModule/getAllPdf'
             }),
         },
        async created() {
@@ -104,6 +104,9 @@ import Navbar from '@/components/common/Navbar'
             border-radius: 20px;
             font-weight: bold;
             cursor: pointer;
+            &:focus{
+                outline: none;
+            }
         }
         h1 {
             margin-top: 50px;

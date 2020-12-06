@@ -39,7 +39,6 @@
             </div>
             <TableResultAdmin 
                 :dataList="listResultRegister" 
-                :eventSelect="deleteSubject" 
                 :getResult="getResultRegister"
                 :eventSelectLocal="getResultRegister"
             />

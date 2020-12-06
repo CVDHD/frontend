@@ -8,7 +8,10 @@
             <router-link to ='/' >E-learning</router-link>
             <router-link to ='/dang-ky-hoc' >Đăng ký học</router-link>
             <router-link to ='/ket-qua-dang-ky-hoc' >Kết quả đăng ký học</router-link>
-            <router-link to ='/thong-bao' >Thông báo</router-link>
+            <router-link to ='/thong-bao' >
+                Thông báo
+                 <a-badge count="25" />
+            </router-link>
             <a-dropdown v-model="visible">
                 <a class="ant-dropdown-link" @click="e => e.preventDefault()">
                 <img src="@/assets/person.png" class="person" />

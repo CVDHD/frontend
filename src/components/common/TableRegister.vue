@@ -6,6 +6,7 @@
       <th class="text-left">Tên môn học</th>
       <th>Phòng</th>
       <th>Số lượng</th>
+      <th>Hiện tại</th>
       <th>Giảng viên</th>
       <th>Thứ</th>
       <th>Thời gian</th>
@@ -16,11 +17,12 @@
       :key="index" :title="data.subject_name"
       
       >
-        <td @click="submit(data)"><a-checkbox :checked="isChecked(data.class_id)" /></td>
+        <td @click="submit(data)"><a-checkbox :checked="isChecked(data.class_id)" :disabled="isChecked(data.class_id)"/></td>
         <td >{{data.class_id}}</td>
         <td class="text-left">{{data.subject_name}}</td>
         <td>{{data.room}}</td>
         <td>{{data.max_student}}</td>
+        <td>{{data.CurentStudent}}</td>
         <td>{{data.teacher_name}}</td>
         <td>{{data.day}}</td>
         <td>{{`${data.start_class} - ${data.end_class}`}}</td>
@@ -33,7 +35,7 @@ export default {
   props:{
     dataListRegister:{//dan sach dang ky hoc
       type: Array,
-      required: true
+      // required: true
     },
     dataList: {//ket qua dang ky hoc
       type: Array,

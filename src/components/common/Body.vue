@@ -8,7 +8,7 @@
                </div>
                <div class="button">
                    <button><router-link to ='/login' >Đăng nhập</router-link></button>
-                   <button>Đăng ký</button>
+                   <!-- <button>Đăng ký</button> -->
                </div>
                <div class="link">
                    <img src="@/assets/link.png" alt="">
@@ -50,7 +50,7 @@
                     font-weight: bold;
                 }
                 .button {
-                    margin-top: 50px;
+                    margin-top: 20px;
                     display: flex;
                     justify-content: center;
                     align-items: center;

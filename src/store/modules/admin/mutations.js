@@ -5,8 +5,14 @@ const setResultRegister = (state, resultRegisters) => {
 const removeResultRegisterLocal = (state, removeSubject) => {
     state.resultRegisters = [...state.resultRegisters.filter(subject => subject.class_id != removeSubject.class_id)]
 }
+
+const removeListRegisterLocal = (state, removeSubject) => {
+    
+    state.listRegisters = [...state.listRegisters.filter(subject => subject.class_id != removeSubject)]
+}
+
 const setListRegister = (state, listRegister) => {
-    state.listRegister = listRegister ? listRegister.map(data => ({...data, time: data.start_class + '-' + data.end_class})): null
+    state.listRegisters = listRegister ? listRegister.map(data => ({...data, time: data.start_class + '-' + data.end_class})): null
 }
 
 const editListRegister = (state, editRegister) => {
@@ -31,6 +37,7 @@ const setListSubjects = (state, listSubjects) => {
 
 
 
+
 export default {
     removeResultRegisterLocal,
     setListRegister,
@@ -38,6 +45,7 @@ export default {
     editListRegister,
     setListRooms,
     setListSubjects,
-    setListTeachers
+    setListTeachers,
+    removeListRegisterLocal
 }
 

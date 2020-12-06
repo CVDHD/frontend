@@ -63,6 +63,13 @@ class UserService {
             onFailure(err)
         }
     }
+    async getFile(onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.getPdf('download_enroll'))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
 
 }
 const singletonInstance = new UserService()

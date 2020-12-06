@@ -16,7 +16,7 @@
                <br>
                <br>
                 <div class="pagination">
-                     <a-pagination :default-current="1" :total="200" @change="onChange" />
+                     <a-pagination :default-current="1" :total="totalRow" @change="onChange" />
                 </div>
             </div>
             </div>
@@ -54,7 +54,8 @@
             ...mapGetters({
                 listResultRegister: 'userModule/getResultRegister',
                 listRegister: 'userModule/getListRegister',
-                loading: 'userModule/getLoading'
+                totalRow: 'commonModule/getTotalRow'
+                
         })
 
         },
@@ -82,6 +83,7 @@
         },
         async mounted() {
           await this.getListPageRegister(this.currentPage)
+          await this.getResultRegister()
         },
     }
 </script>

@@ -1,8 +1,11 @@
 <template>
-    <div id="login">
+    <div>
+        <img src="@/assets/logo.png" alt="">
+        <h1 class="title">HỆ THỐNG ĐĂNG KÝ HỌC E-LEARNING</h1>
+        <div id="login">
         <div class="form">
             <div class="img">
-                <img src="@/assets/person.jpg" alt="">
+                <img src="@/assets/login.jpg" alt="">
             </div>
             <div class="login-forget">
                 <div v-if="status" class="login">
@@ -19,7 +22,7 @@
                      placeholder="Password" 
                      v-model="passwd"/>
                      <a-button type="primary" @click="login">
-                        Login
+                        Đăng nhập
                     </a-button>
 
                 </div>
@@ -28,6 +31,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </template>
 
@@ -65,10 +69,16 @@ import {mapActions} from 'vuex'
 </script>
 
 <style lang="scss" scoped>
+    .title{
+        text-align: center;
+        color: #cce218;
+        font-weight: bold;
+        margin-bottom: 100px;
+    }
     #login{
         display: flex;
         width: 100%;
-        height: 100vh;
+        height: 40vh;
         justify-content: center;
         align-items: center;
        .form{
@@ -76,8 +86,8 @@ import {mapActions} from 'vuex'
            width: 80%;
            max-width: 1000px;
            height: 500px;
-           background-color: #ecf0f5;
-           border-radius: 1%;
+           background: linear-gradient(135deg, rgb(5, 104, 21) 58%, rgb(22, 13, 192) 70%, rgb(229, 255, 80) 97%);
+           border-radius: 20px;
            overflow: hidden;
            .img{
                display: flex;
@@ -97,19 +107,24 @@ import {mapActions} from 'vuex'
                width: 50%;
             //    border-left: 1px solid yellow;
                .login{
-                   width: 80%;
+                   width: 60%;
                   input{
                        margin-bottom: 30px;
+                       padding: 20px;
+                       border-radius: 10px;
                    }
                    h1{
-                       color: rgb(30, 138, 233);
+                       color: rgb(230, 235, 240);
                        text-align: center;
-                       margin-bottom: 3em;
+                       margin-bottom: 2em;
+                       font-weight: bold;
                    }
                    button{
                        margin-top: 2em;
                        width: 100%;
                        height: 50px;
+                       font-weight: bold;
+                       font-size: 1.5em;
                    }
                }
            }

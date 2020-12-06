@@ -2,8 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/pages/Home'
 import Token from '../services/cookie_local_storage/Token'
+import store from '../store'
 Vue.use(VueRouter)
-
+console.log(store.getters)
 const routes = [
   {
     path: '/',
@@ -29,6 +30,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () => import('@/pages/login')
+  },
+  {
+    path: '/thong-bao',
+    name: 'notify',
+    component: () => import('@/pages/Notify')
   }
 
 ]

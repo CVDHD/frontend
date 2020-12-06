@@ -8,6 +8,22 @@ class HttpHandler {
       config
     })
   }
+  getZip (url) {
+    return InstanceAxios()({
+      method: 'get',
+      url: url,
+      responseType: 'blob'
+    })
+  }
+
+  getPdf (url, payload) {
+    return InstanceAxios()({
+      method: 'get',
+      url: url,
+      responseType: 'blob',
+      data: payload
+    })
+  }
 
   post (url, payload, config = {}) {
     return InstanceAxios()({
@@ -37,7 +53,7 @@ class HttpHandler {
 
   delete (url, payload, config={}) {
     return InstanceAxios()({
-      method: 'post',
+      method: 'delete',
       url: url,
       config,
       data: payload

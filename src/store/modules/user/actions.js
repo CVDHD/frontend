@@ -9,8 +9,8 @@ const login = ({commit }, loginForm) => {
     loginForm,
     res => {
       localStorage.setToken(res.data.success.token)
-      localStorage.setUser(res.data.success.id)
-      localStorage.setRole(res.data.role)
+      localStorage.setUser(loginForm)
+      localStorage.setRole(res.data.success.role)
       router.push('/')
       commit('setNameUser', res.username)
       commit('setRoleUser', res.role)
@@ -24,6 +24,7 @@ const login = ({commit }, loginForm) => {
 const logout = () => {
   userService.logout(
     () => {
+      location.reload()
       router.push('/login')
       localStorage.clearToken('token')
     },
@@ -100,11 +101,32 @@ const getListPageRegister = ({ commit }, page) => {
     userService.getListPageRegister(
     page,
       res => {
-        commit('setListRegister', res.data)
+        console.log(res.data.total)
+        commit('commonModule/setTotalRow',res.data.total, {root: true})
+        commit('setListRegister', res.data['class list'])
         commit('commonModule/loadingFalse', null, {root: true})
     },
       e => {
         commit('commonModule/loadingFalse', null, {root: true})
+        handleErrors.resolveCommonErrors(e)
+      }
+  )
+}
+const getPdfFile = ({commit}) => {
+    commit('commonModule/loadingTrue', null, { root: true })
+  userService.getFile(
+      res => {
+        commit('commonModule/loadingFalse', null, { root: true })
+        const fileName = res.headers["content-disposition"].split("filename=")[1]
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileName);
+        document.body.appendChild(link);
+        link.click();
+    },
+      e => {
+        commit('commonModule/loadingFalse', null, { root: true })
         handleErrors.resolveCommonErrors(e)
       }
   )
@@ -117,5 +139,6 @@ export default {
   addResultRegister,
   deleteSubject,
   getListPageRegister,
-  fileUploadCsv
+  fileUploadCsv,
+  getPdfFile
 }

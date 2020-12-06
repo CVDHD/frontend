@@ -6,7 +6,7 @@
             <TablePrintStudent 
                 :dataList="listResultRegister" 
             />
-            <a-button type="primary" icon="download" size="large" class="save">
+            <a-button type="primary" icon="download" size="large" class="save" @click="getPdfFile">
                  Download
             </a-button>
         </div>
@@ -32,6 +32,7 @@ import Navbar from '@/components/common/Navbar'
         methods: {
             ...mapActions({
                 getResultRegister: 'userModule/getResultRegister',
+                getPdfFile: 'userModule/getPdfFile'
             }),
         },
         async created() {

@@ -31,7 +31,7 @@
         <td v-if="columEdit!==(index+1)">{{data.max_student}}</td>
         <td v-else><input type="text" :value="data.max_student"></td>
 
-        <td >24</td>
+        <td >{{data.CurentStudent}}</td>
 
         <td v-if="columEdit!==(index+1)">{{data.teacher_name}}</td>
         <td v-else><input type="text" :value="data.teacher_name"></td>
@@ -43,7 +43,7 @@
         <td v-else><input type="text" :value="data.start_class + '-' + data.end_class"></td>
         <td class="action">
           <a-icon :type="columEdit !== (index+1) ? 'edit' : 'save'" @click="changeEdit(index+1)" />
-          <a-icon type="delete" /></td>
+          <a-icon type="delete" @click="deleteRegister(data.class_id)"/></td>
       </tr>
     </tbody>
   </table>
@@ -74,10 +74,6 @@ export default {
       type: Array,
       required: true
     },
-    eventSelect:{//submit to server
-      type: Function,
-      required: true
-    },
     eventSelectLocal:{ //add to local
       type: Function,
       required: true
@@ -88,7 +84,8 @@ export default {
   
           getlistTeachers: 'adminModule/getListTeachers',
           getlistSubjects: 'adminModule/getListSubjects',
-          getlistRooms: 'adminModule/getListRooms'
+          getlistRooms: 'adminModule/getListRooms',
+          deleteRegister: 'adminModule/deleteRegister'
     }),
 
     async submit(class_id){
@@ -112,9 +109,7 @@ export default {
 
   },
   async mounted() {
-      // this.getlistTeachers()
-      // this.getlistSubjects()
-      // this.getlistRooms()
+      
   }
 }
 </script>

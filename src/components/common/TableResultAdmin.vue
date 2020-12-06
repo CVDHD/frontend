@@ -23,19 +23,20 @@
         <td class="text-left">{{data.subject_name}}</td>
         <td>{{data.room}}</td>
         <td>{{data.max_student}}</td>
-        <td>24</td>
+        <td>data.CurentStudent</td>
         <td>{{data.day}}</td>
         <td>{{`${data.start_class} - ${data.end_class}`}}</td>
         <td>Nguyen Van A</td>
         <td class="action">
             <a-icon type="eye" />
-            <a-icon type="printer" />
+            <a-icon type="printer" @click="getFilePdf(data.class_id)"/>
         </td>
       </tr>
     </tbody>
   </table>
 </template>
 <script>
+import {mapActions} from 'vuex'
 export default {
   data(){
     return {
@@ -47,16 +48,15 @@ export default {
       type: Array,
       required: true
     },
-    eventSelect:{//submit to server
-      type: Function,
-      required: true
-    },
     eventSelectLocal:{ //add to local
       type: Function,
       required: true
     }
   },
   methods:{
+     ...mapActions({
+                getFilePdf: 'adminModule/getFilePdf'
+        }),
     async submit(class_id){
        await this.eventSelect({class_id})
     },

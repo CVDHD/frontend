@@ -10,9 +10,9 @@ class AdminService {
         }
     }
 //xoa dang ky hoc
-    async deleteRegister(code_subject, onSuccess, onFailure) {
+    async deleteRegister(class_id, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.post('delete', code_subject))
+            onSuccess(await httpHandler.delete('delete-register', class_id))
         } catch (err) {
             onFailure(err)
         }
@@ -114,7 +114,20 @@ class AdminService {
             onFailure(err)
         }
     }
-
+    async getFileZip(onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.getZip('download-class/all'))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+    async getFilePdf(payload, onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.getPdf('download-class', payload))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
 
 }
 
