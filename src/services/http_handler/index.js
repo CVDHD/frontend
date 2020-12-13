@@ -16,12 +16,11 @@ class HttpHandler {
     })
   }
 
-  getPdf (url, payload) {
+  getPdf (url) {
     return InstanceAxios()({
       method: 'get',
       url: url,
       responseType: 'blob',
-      data: payload
     })
   }
 

@@ -8,8 +8,9 @@
                </div>
                <div class="button">
                    <button><router-link to ='/login' >Đăng nhập</router-link></button>
-                   <!-- <button>Đăng ký</button> -->
+                   <button><router-link to ='/login' >Đăng ký</router-link></button>
                </div>
+               
                <div class="link">
                    <img src="@/assets/link.png" alt="">
                </div>
@@ -17,7 +18,7 @@
            
         </div>
         <div class="banner">
-            <a-carousel autoplay effect="fade" dots="false">
+            <a-carousel autoplay effect="fade" :dots="false">
                 <img src="@/assets/el.png" alt="banner">
                 <img src="@/assets/el2.png" alt="banner1">
                 <img src="@/assets/el3.png" alt="banner3">

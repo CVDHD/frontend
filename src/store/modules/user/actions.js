@@ -1,6 +1,6 @@
 import userService from '../../../services/getData/UserService'
 import router from '../../../router'
-import localStorage from '../../../services/cookie_local_storage/Token'
+import LocalStorage from '../../../services/cookie_local_storage/Token'
 import handleErrors from '../../../services/handler_error'
 import swalAlert from '../../../services/swal_alert'
 
@@ -8,12 +8,14 @@ const login = ({commit }, loginForm) => {
   userService.requestLogin(
     loginForm,
     res => {
-      localStorage.setToken(res.data.success.token)
-      localStorage.setUser(loginForm)
-      localStorage.setRole(res.data.success.role)
+      LocalStorage.setToken(res.data.success.token)
+      LocalStorage.setUser(loginForm.id)
+      LocalStorage.setRole(res.data.success.role)
+      // location.reload()
       router.push('/')
-      commit('setNameUser', res.username)
-      commit('setRoleUser', res.role)
+      console.log(res)
+      // commit('commonModule/setNameUser', res.username, {root: true})
+      commit('commonModule/setRoleUser', res.data.success.role, {root: true})
     },
     e => {
       handleErrors.resolveCommonErrors(e)
@@ -24,9 +26,8 @@ const login = ({commit }, loginForm) => {
 const logout = () => {
   userService.logout(
     () => {
-      location.reload()
+      localStorage.clear()
       router.push('/login')
-      localStorage.clearToken('token')
     },
     () => {}
   )
@@ -85,7 +86,7 @@ const deleteSubject = ({ commit }, codeSubject) => {
     commit('commonModule/loadingFalse', null, {root: true})
       swalAlert.open({
             title: 'Hủy thành công!',
-            text: `Bạn đã hủy thành công môn học ${codeSubject}`,
+            text: `Bạn đã hủy thành công môn học ${codeSubject.class_id}`,
             icon: 'success'
           }, () => {
           })
@@ -101,7 +102,6 @@ const getListPageRegister = ({ commit }, page) => {
     userService.getListPageRegister(
     page,
       res => {
-        console.log(res.data.total)
         commit('commonModule/setTotalRow',res.data.total, {root: true})
         commit('setListRegister', res.data['class list'])
         commit('commonModule/loadingFalse', null, {root: true})

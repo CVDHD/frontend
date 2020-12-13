@@ -2,9 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/pages/Home'
 import Token from '../services/cookie_local_storage/Token'
-import store from '../store'
 Vue.use(VueRouter)
-console.log(store.getters)
 const routes = [
   {
     path: '/',
@@ -12,19 +10,29 @@ const routes = [
     component: Home
   },
   {
-    path: '/dang-ky-hoc',
+    path: '/student/dang-ky-hoc',
     name: 'register-learn',
-    component: Token.getRole() === 'admin' ? () => import('@/pages/admin/Register') : () => import('@/pages/student/Register')
+    component: () => import(`@/pages/student/Register`)
   },
   {
-    path: '/ket-qua-dang-ky-hoc',
+    path: '/student/ket-qua-dang-ky-hoc',
     name: 'result-register-learn',
-    component: Token.getRole() === 'admin' ? () => import('@/pages/admin/Result') : () => import('@/pages/student/Result')
+    component: () => import(`@/pages/student/Result`)
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('@/pages/login')
+    path: '/admin/dang-ky-hoc',
+    name: 'register-learn',
+    component: () => import(`@/pages/admin/Register`)
+  },
+  {
+    path: '/admin/ket-qua-dang-ky-hoc',
+    name: 'result-register-learn',
+    component: () => import(`@/pages/admin/Result`)
+  },
+  {
+    path: '/admin/ket-qua-dang-ky-hoc/:class_id',
+    name: 'result-register-learn-class',
+    component: () => import(`@/pages/admin/ClassShow`)
   },
   {
     path: '/login',
@@ -45,6 +53,7 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
+  console.log(Token.getRole())
   if (to.name !== 'login' && !Token.getToken()) next({ name: 'login' })
   next()
 })

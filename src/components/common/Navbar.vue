@@ -6,8 +6,15 @@
         </div>
         <div class="menu">
             <router-link to ='/' >E-learning</router-link>
-            <router-link to ='/dang-ky-hoc' >Đăng ký học</router-link>
-            <router-link to ='/ket-qua-dang-ky-hoc' >Kết quả đăng ký học</router-link>
+            <router-link 
+            :to ='role == "admin" ? "/admin/dang-ky-hoc" : "/student/dang-ky-hoc"' >
+            Đăng ký học
+            </router-link>
+            <router-link 
+            :to ='role == "admin" ? "/admin/ket-qua-dang-ky-hoc" : "/student/ket-qua-dang-ky-hoc"' 
+            >
+            Kết quả đăng ký học
+            </router-link>
             <router-link to ='/thong-bao' >
                 Thông báo
                  <a-badge count="25" />
@@ -34,6 +41,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 import router from '../../router'
 import Token from '../../services/cookie_local_storage/Token'
     export default {
@@ -44,7 +52,10 @@ import Token from '../../services/cookie_local_storage/Token'
                  visible: false,
             }
         },
-        components:{
+        computed:{
+             ...mapGetters({
+                role: 'commonModule/getRole',
+        })
         },
         methods:  {
             search(){
@@ -58,8 +69,10 @@ import Token from '../../services/cookie_local_storage/Token'
             logout(){
                  Token.clearToken()
                 router.push('/login')
-
-            }
+            },
+            mounted() {
+                console.log(this.role)
+            },
         }
     }
 </script>

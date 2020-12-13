@@ -14,7 +14,8 @@
     <tbody>
       <tr 
       v-for="(data, index) in dataListRegister" 
-      :key="index" :title="data.subject_name"
+      :key="index" :title="isChecked1(data.class_id) ? 'Môn học đã đăng ký' : data.subject_name"
+      :class="isChecked1(data.class_id) ? 'bg-yellow' : ''"
       
       >
         <td @click="submit(data)"><a-checkbox :checked="isChecked(data.class_id)" :disabled="isChecked(data.class_id)"/></td>
@@ -56,6 +57,9 @@ export default {
     },
     isChecked(class_id){
       return this.dataList.findIndex( data => data.class_id === class_id) >= 0
+    },
+    isChecked1(class_id){
+      return this.dataList.findIndex( data => data.class_id.slice(0, -2) === class_id.slice(0,-2)) >= 0
     }
   },
   computed:{
@@ -64,6 +68,9 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+  .bg-yellow{
+    background-color: #c1c159;
+  }
   .text-left{
     text-align: left;
   }

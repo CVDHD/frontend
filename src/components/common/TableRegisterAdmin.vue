@@ -19,28 +19,38 @@
       
       >
         <td>{{index +1}}</td>
-        <td v-if="columEdit!==(index+1)">{{data.class_id}}</td>
-        <td v-else> <input type="text" :value="data.class_id"></td>
+        <td >{{data.class_id}}</td>
 
-        <td v-if="columEdit!==(index+1)" class="text-left">{{data.subject_name}}</td>
-        <td v-else> <input type="text" :value="data.subject_name"></td>
+        <td class="text-left">{{data.subject_name}}</td>
 
         <td v-if="columEdit!==(index+1)">{{data.room}}</td>
-        <td v-else><input type="text" :value="data.room"></td>
+        <td v-else><a-auto-complete
+                            v-model="registerEdit.room"
+                            :data-source="listRooms? listRooms : ''"
+                            style="width: 100px"
+                            placeholder="Phòng"
+                      />
+        </td>
 
         <td v-if="columEdit!==(index+1)">{{data.max_student}}</td>
-        <td v-else><input type="text" :value="data.max_student"></td>
+        <td v-else><input v-model="registerEdit.max" type="number"></td>
 
         <td >{{data.CurentStudent}}</td>
 
         <td v-if="columEdit!==(index+1)">{{data.teacher_name}}</td>
-        <td v-else><input type="text" :value="data.teacher_name"></td>
+        <td v-else><a-auto-complete
+                            v-model="registerEdit.teacher"
+                            :data-source="listTeachers? listTeachers : ''"
+                            style="width: 100px"
+                            placeholder="Phòng"
+                   />
+        </td>
         
         <td v-if="columEdit!==(index+1)">{{data.day}}</td>
-        <td v-else><input type="text" :value="data.day"></td>
+        <td v-else><input type="number" v-model="registerEdit.day"></td>
 
         <td v-if="columEdit!==(index+1)">{{`${data.start_class} - ${data.end_class}`}}</td>
-        <td v-else><input type="text" :value="data.start_class + '-' + data.end_class"></td>
+        <td v-else><input type="text" v-model="registerEdit.time"></td>
         <td class="action">
           <a-icon :type="columEdit !== (index+1) ? 'edit' : 'save'" @click="changeEdit(index+1)" />
           <a-icon type="delete" @click="deleteRegister(data.class_id)"/></td>
@@ -54,15 +64,15 @@ export default {
    data(){
     return {
       columEdit: null,
-      registerEditAdd:{
-        subject_id: '',
-        name: '',
+      registerEdit:{
         room: '',
         max: '',
         teacher: '',
         day: '',
         time: ''
-      }
+      },
+      dataEdit: ''
+
     }
   },
   props:{
@@ -83,7 +93,6 @@ export default {
     ...mapActions({
   
           getlistTeachers: 'adminModule/getListTeachers',
-          getlistSubjects: 'adminModule/getListSubjects',
           getlistRooms: 'adminModule/getListRooms',
           deleteRegister: 'adminModule/deleteRegister'
     }),
@@ -98,17 +107,24 @@ export default {
 
     changeEdit(id){
       this.columEdit = id
+      this.dataEdit = this.dataListRegister[id-1]
+      this.registerEdit.room = this.dataListRegister[id-1].room
+      this.registerEdit.teacher = this.dataListRegister[id-1].teacher_name
+      this.registerEdit.day= this.dataListRegister[id-1].day
+      this.registerEdit.time= this.dataListRegister[id-1].time
+      this.registerEdit.max = this.dataListRegister[id-1].max_student
     }
   },
   computed: {
       ...mapGetters({
           listTeachers: 'adminModule/getListTeachers',
-          listSubjects: 'adminModule/getListSubjects',
           listRooms: 'adminModule/getListRooms'
     })
 
   },
   async mounted() {
+    this.getlistRooms()
+    this.getlistTeachers()
       
   }
 }

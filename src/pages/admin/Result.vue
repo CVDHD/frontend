@@ -38,10 +38,11 @@
                 </a-select>
             </div>
             <TableResultAdmin 
-                :dataList="listResultRegister" 
-                :getResult="getResultRegister"
-                :eventSelectLocal="getResultRegister"
+                :dataList="listRegister" 
             />
+            <div class="pagination">
+                     <a-pagination :default-current="1" :total="totalRow" @change="onChange" />
+                </div>
             <button class="printAll" @click="getAllPdf">Print all</button>
         </div>
     
@@ -57,6 +58,7 @@ import Navbar from '@/components/common/Navbar'
             return {
                 currentOption: "all",
                 option: [],
+                currentPage: 1,
             }
         },
         components: {
@@ -65,18 +67,23 @@ import Navbar from '@/components/common/Navbar'
         },
         computed: {
             ...mapGetters({
-                listResultRegister: 'userModule/getResultRegister',
+                listRegister: 'adminModule/getListRegisters',
+                totalRow: 'commonModule/getTotalRow'
         })
 
         },
         methods: {
             ...mapActions({
-                getResultRegister: 'userModule/getResultRegister',
-                getAllPdf: 'adminModule/getAllPdf'
+                getAllPdf: 'adminModule/getAllPdf',
+                getListPageRegister: 'adminModule/getListPageRegister',
             }),
+            async onChange(current) {
+                this.currentPage = current
+                this.getListPageRegister(this.currentPage)
+            },
         },
        async created() {
-            await this.getResultRegister()
+            await this.getListPageRegister(1)
         }
     }
 </script>
@@ -84,6 +91,11 @@ import Navbar from '@/components/common/Navbar'
 <style lang="scss" scoped>
     #result-register{
         min-height: 63vh;
+        .pagination{
+                float: right;
+                margin-right: 100px;
+                margin-top: 20px;
+            }
         .select{
             display: flex;
             align-items: center;

@@ -12,6 +12,7 @@ const getListTeachers = state => state.listTeachers
 
 const getListSubjects = state => state.listSubjects
 
+const getStudentOfClass= state => state.listStudentOfClass
 
 export default {
     getResultRegisters,
@@ -20,5 +21,6 @@ export default {
     getRole,
     getListRooms,
     getListSubjects,
-    getListTeachers
+    getListTeachers,
+    getStudentOfClass
 }

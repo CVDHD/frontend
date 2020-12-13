@@ -6,6 +6,9 @@
             <div v-if="table">
                 <h1 class = "title-1">Danh sách môn học đăng ký</h1>
                 <div class="table">
+                    <div class="pagination">
+                     <a-pagination :default-current="1" :total="totalRow" @change="onChange" />
+                </div>
                     <TableRegister 
                         :dataListRegister="listRegister" 
                         :eventSelect="addResultRegister" 
@@ -13,11 +16,6 @@
                         :dataList="listResultRegister"
 
                     />
-               <br>
-               <br>
-                <div class="pagination">
-                     <a-pagination :default-current="1" :total="totalRow" @change="onChange" />
-                </div>
             </div>
             </div>
             <div v-else>

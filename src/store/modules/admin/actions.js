@@ -1,10 +1,11 @@
 import adminService from '../../../services/getData/AdminService'
+import userService from '../../../services/getData/UserService'
 import handleErrors from '../../../services/handler_error'
 import swalAlert from '../../../services/swal_alert'
 //lay ket qua dang ky hoc
 const getResultRegister = ({ commit }) => {
   commit('commonModule/loadingTrue', null, { root: true })
-  adminService.getResultRegister(
+  userService.getListPageRegister(
     res => {
       commit('commonModule/loadingFalse', null, { root: true })
       commit('setResultRegister', res.data['class list'])
@@ -17,11 +18,11 @@ const getResultRegister = ({ commit }) => {
 //them sinh vien vao lop mon hoc
 const addStudentToClass = ({ commit }, data) => {
   commit('commonModule/loadingTrue', null, { root: true })
-  adminService.addStudent(data, () => {
+  adminService.addStudentToClass(data, () => {
     commit('commonModule/loadingFalse', null, { root: true })
       swalAlert.open({
-            title: 'Đăng ký thành công!',
-            text: `Bạn đã đăng ký thành công môn học`,
+            title: 'Thêm thành công!',
+            text: `Bạn thêm thành công sinh viên ${data.student_id}  vào lớp học ${data.class_id}`,
             icon: 'success'
           }, () => {
           })
@@ -33,11 +34,13 @@ const addStudentToClass = ({ commit }, data) => {
 //xoa dang ky hoc cua sinh vien
 const removeStudentFromClass = ({ commit }, data) => {
   commit('commonModule/loadingTrue', null, { root: true })
-  adminService.removeStudent(data, () => {
+  adminService.deleteStudentOfClass(data, () => {
     commit('commonModule/loadingFalse', null, { root: true })
+    console.log(data)
+    commit('deleteStudentOfClassLocal', data.student_id)
       swalAlert.open({
-            title: 'Đăng ký thành công!',
-            text: `Bạn đã đăng ký thành công môn học`,
+            title: 'Xóa thành công!',
+            text: `Bạn đã xóa sinh viên ${data.student_id} khỏi lớp học ${data.class_id}`,
             icon: 'success'
           }, () => {
           })
@@ -85,11 +88,13 @@ const deleteRegister = ({ commit }, class_id) => {
 
 const getListPageRegister = ({ commit }, page) => {
   commit('commonModule/loadingTrue', null, { root: true })
-    adminService.getListPageRegister(
+    userService.getListPageRegister(
     page,
       res => {
         commit('setListRegister', res.data['class list'])
         commit('commonModule/loadingFalse', null, { root: true })
+        commit('commonModule/setTotalRow',res.data.total, {root: true})
+
     },
       e => {
         commit('commonModule/loadingFalse', null, { root: true })
@@ -101,7 +106,7 @@ const getListRooms = ({ commit }) => {
   
     adminService.getListRooms(
       res => {
-        commit('setListRooms', res.data)
+        commit('setListRooms', res.data.data)
     },
       e => {
         handleErrors.resolveCommonErrors(e)
@@ -113,7 +118,7 @@ const getListTeachers = ({ commit }) => {
   
     adminService.getListTeachers(
       res => {
-        commit('setListTeachers', res.data)
+        commit('setListTeachers', res.data.data)
     },
       e => {
         handleErrors.resolveCommonErrors(e)
@@ -125,7 +130,7 @@ const getListSubjects = ({ commit }) => {
   
     adminService.getListSubjects(
       res => {
-        commit('setListSubjects', res.data)
+        commit('setListSubjects', res.data.data)
     },
       e => {
         handleErrors.resolveCommonErrors(e)
@@ -154,16 +159,17 @@ const getAllPdf = ({commit}) => {
 }
 
 const getFilePdf = ({ commit }, data) => {
+  console.log(data)
   commit('commonModule/loadingTrue', null, { root: true })
   adminService.getFilePdf(
-    {class: data},
+    data,
       res => {
         commit('commonModule/loadingFalse', null, { root: true })
         const fileName = res.headers["content-disposition"].split("filename=")[1]
         const url = window.URL.createObjectURL(new Blob([res.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', fileName);
+        link.setAttribute('download', data +fileName.slice(0, -1));
         document.body.appendChild(link);
         link.click();
     },
@@ -174,6 +180,41 @@ const getFilePdf = ({ commit }, data) => {
   )
 }
 
+const getAllStudentByClass = ({commit}, data) => {
+  commit('commonModule/loadingTrue', null, { root: true })
+  adminService.getStudentByClass(data,
+    res => {
+      commit('commonModule/loadingFalse', null, { root: true })
+      commit('setListStudentOfClass',res.data.data)
+      console.log(res.data.data)
+    },
+    e => {
+        commit('commonModule/loadingFalse', null, { root: true })
+        handleErrors.resolveCommonErrors(e)
+      }
+  )
+}
+const addRegister = ({commit}, data) => {
+  commit('commonModule/loadingTrue', null, { root: true })
+  adminService.addRegister(data,
+    res => {
+      commit('commonModule/loadingFalse', null, { root: true })
+      commit('addListRegisterLocal', data)
+      swalAlert.open({
+            title: 'Upload thành công!',
+            text: 'Bạn đã upload thành công thời khóa biểu',
+            icon: 'success'
+          }, () => {
+      })
+      console.log(res)
+      
+    },
+    e => {
+        commit('commonModule/loadingFalse', null, { root: true })
+        handleErrors.resolveCommonErrors(e)
+      }
+  )
+ }
 
 export default {
   getResultRegister,
@@ -186,5 +227,7 @@ export default {
   getListSubjects,
   removeStudentFromClass,
   getAllPdf,
-  getFilePdf
+  getFilePdf,
+  getAllStudentByClass,
+  addRegister
 }

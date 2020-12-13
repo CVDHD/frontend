@@ -6,6 +6,17 @@ class HandleErrors {
   resolveCommonErrors (e, title = 'Error') {
     if (e.response) {
       switch (e.response.status) {
+        case 400: 
+        case 501:
+          console.log(e.response)
+          swalAlert.open({
+            title: 'Error',
+            text: e.response.data.message,
+            icon: 'error'
+          }, () => {
+            localStorage.clearToken()
+          })
+          break
         case 401: router.push('/login')
           swalAlert.open({
             title: 'Unauthorized',
@@ -27,11 +38,12 @@ class HandleErrors {
           console.log(e)
           swalAlert.open({
           title: title,
-          text: e.response.message,
+          text: e.response.data.message,
           icon: 'error'
         }, () => {})
       }
     } else {
+      console.log(e)
       swalAlert.open({
         text: 'SOMETHING WENT WRONG! CANNOT CONNECT TO SERVER API',
         icon: 'error'

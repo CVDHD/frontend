@@ -1,115 +1,118 @@
 <template>
     <div>
         <Navbar />
-        <div id="result-register">
-            <h1 class ='title'>KẾT QUẢ ĐĂNG KÝ HỌC CỦA SINH VIÊN</h1>
-            <div class="select">
-                <a-select 
-                    v-model="currentOption" 
-                    style="width: 200px"
-                >
-                    <a-select-option value="all">
-                        Tất cả
-                    </a-select-option>
-                    <a-select-option value="class">
-                        Lớp môm học
-                    </a-select-option>
-                    <a-select-option value="teacher">
-                       Giảng viên
-                    </a-select-option>
-                    <a-select-option value="major">
-                        Khoa
-                    </a-select-option>
-                </a-select>
-                <a-icon type="arrow-right" size="lagre"/>
-                <a-select default-value="lucy" style="width: 200px" >
-                    <a-select-option value="jack">
-                        Môn học
-                    </a-select-option>
-                    <a-select-option value="lucy">
-                        Lớp môm học
-                    </a-select-option>
-                    <a-select-option value="disabled">
-                       Giảng viên
-                    </a-select-option>
-                    <a-select-option value="Yiminghe">
-                        CK
-                    </a-select-option>
-                </a-select>
-            </div>
-            <TableResultAdmin 
-                :dataList="listResultRegister" 
-                :getResult="getResultRegister"
-                :eventSelectLocal="getResultRegister"
+        <div class="body">
+            <h1 class ='title'>KẾT QUẢ ĐĂNG KÝ HỌC CỦA SINH VIÊN LỚP -  {{class_id}}</h1>
+            <TableByClass
+                :dataList="listStudentOfClass"
             />
-            <button class="printAll">Print all</button>
+            <div class="form" v-if="isAdd">
+                 <a-input placeholder="Mã sinh viên" v-model="student_id"/>
+                 <a-button type="primary" @click="addStudentToClass">
+                        Submit
+                 </a-button>
+             </div>
+             <a-icon :type="!isAdd ? 'plus-circle': 'close-circle'" :class="isAdd ? 'deleteIcon' : 'addIcon'" @click="showAdd"/>
+            <button class="getFile" @click="getFilePdf(class_id)">Save</button>
         </div>
-    
     </div>
 </template>
 
 <script>
 import {mapGetters, mapActions} from 'vuex'
-import TableResultAdmin from '@/components/common/TableResultAdmin'
+import TableByClass from '@/components/common/TableByClass'
 import Navbar from '@/components/common/Navbar'
     export default {
         data(){
             return {
                 currentOption: "all",
                 option: [],
+                class_id: '',
+                isAdd: false,
+                student_id:''
             }
         },
         components: {
             Navbar,
-           TableResultAdmin
+           TableByClass
         },
         computed: {
             ...mapGetters({
-                listResultRegister: 'userModule/getResultRegister',
-        })
-
+                listStudentOfClass: 'adminModule/getStudentOfClass',
+        }),
         },
         methods: {
             ...mapActions({
-                getResultRegister: 'userModule/getResultRegister',
+                getClass: 'adminModule/getAllStudentByClass',
+                getFilePdf: 'adminModule/getFilePdf',
+                addStudent: 'adminModule/addStudentToClass'
             }),
+            showAdd(){
+                this.isAdd = !this.isAdd
+            },
+            async addStudentToClass(){
+                await this.addStudent({
+                    class_id: this.$route.params.class_id,
+                    student_id: this.student_id,
+                    subject_id: this.$route.params.class_id.slice(0,-2)
+                })
+            }
         },
-       async created() {
-            await this.getResultRegister()
+        async mounted(){
+            await this.getClass(this.$route.params.class_id)
+            this.class_id = this.$route.params.class_id
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    #result-register{
-        min-height: 63vh;
-        .select{
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-right: 8%;
-            margin-bottom: 100px;
+    .body{
+        padding-top: 50px;
+        width: 90%;
+        margin: auto;
+        .form{
+            input{
+                width: 200px;
+                margin-right: 20px;
+            }
         }
-        .printAll{
-            margin-top: 50px;
-            float: right;
-            width: 150px;
-            margin-right: 100px;
-            color: wheat;
-            background-color: #1890ff;
-            padding: 10px;
-            font-size: 1.5em;
-            border: 1px solid yellow;
-            border-radius: 20px;
+        .title{
+            color: white;
             font-weight: bold;
-            cursor: pointer;
-        }
-        h1 {
-            margin-top: 50px;
             text-align: center;
+            margin-bottom: 50px;
+        }
+        .addIcon{
+                font-size: 4em;
+                color: aqua;
+                cursor: pointer;
+                margin: auto;
+                display: block;
+            }
+        .deleteIcon{
+                font-size: 4em;
+                color: rgb(255, 51, 0);
+                cursor: pointer;
+                margin: auto;
+                display: block;
+            }
+        .getFile{
+            padding: 5px;
+            color:wheat;
+            width: 100px;
+            font-size: 1.5em;
             font-weight: bold;
-            margin-bottom: 20px;
-            color: aliceblue;
+            background-color: rgb(68, 223, 37);
+            border: none;
+            cursor: pointer;
+            &:hover{
+                background-color: greenyellow;
+            }
+            &:focus{
+                outline: none;
+            }
+            float: right;
+            margin-right: 50px;
         }
     }
 </style>

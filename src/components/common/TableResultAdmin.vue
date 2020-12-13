@@ -23,12 +23,14 @@
         <td class="text-left">{{data.subject_name}}</td>
         <td>{{data.room}}</td>
         <td>{{data.max_student}}</td>
-        <td>data.CurentStudent</td>
+        <td>{{data.CurentStudent}}</td>
         <td>{{data.day}}</td>
         <td>{{`${data.start_class} - ${data.end_class}`}}</td>
         <td>Nguyen Van A</td>
         <td class="action">
-            <a-icon type="eye" />
+            <router-link :to="`/admin/ket-qua-dang-ky-hoc/${data.class_id}`">
+              <a-icon type="eye" title="View all"/>
+            </router-link>
             <a-icon type="printer" @click="getFilePdf(data.class_id)"/>
         </td>
       </tr>
@@ -47,19 +49,12 @@ export default {
     dataList:{//dan sach dang ky hoc
       type: Array,
       required: true
-    },
-    eventSelectLocal:{ //add to local
-      type: Function,
-      required: true
     }
   },
   methods:{
      ...mapActions({
-                getFilePdf: 'adminModule/getFilePdf'
+                getFilePdf: 'adminModule/getFilePdf',
         }),
-    async submit(class_id){
-       await this.eventSelect({class_id})
-    },
     changeEdit(id){
       this.columEdit = id
     }

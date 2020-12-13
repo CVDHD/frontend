@@ -123,7 +123,28 @@ class AdminService {
     }
     async getFilePdf(payload, onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.getPdf('download-class', payload))
+            onSuccess(await httpHandler.getPdf(`download-class?class=${payload}`))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+    async getStudentByClass(payload,onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.get(`list-by-class?class=${payload}`))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+    async deleteStudentOfClass(payload,onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.delete('delete-student-register',payload))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+    async addStudentToClass(payload,onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.post('add-student-register',payload))
         } catch (err) {
             onFailure(err)
         }

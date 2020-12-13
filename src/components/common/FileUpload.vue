@@ -22,6 +22,8 @@
 </template>
 <script>
 import adminService from '@/services/getData/AdminService'
+import handleErrors from '../../services/handler_error'
+import swalAlert from '../../services/swal_alert'
 export default {
   data() {
     return {
@@ -42,7 +44,18 @@ export default {
     async handleUpload() {
       const formData = new FormData();
       formData.append('file', this.fileList[0])
-      await adminService.importFileCsv(formData)
+      await adminService.importFileCsv(formData, () =>{
+          location.reload()
+          swalAlert.open({
+            title: 'Thêm thành công!',
+            text: `Bạn thêm thành công danh sách đăng ký học`,
+            icon: 'success'
+          }, () => {
+          })
+      },
+      e => {
+        handleErrors.resolveCommonErrors(e)
+      })
     },
   },
 };

@@ -10,6 +10,7 @@ const state = {
     listRooms: [],
     listTeachers: [],
     listSubjects: [],
+    listStudentOfClass: []
     
 }
 
