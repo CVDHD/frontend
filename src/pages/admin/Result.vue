@@ -3,47 +3,13 @@
         <Navbar />
         <div id="result-register">
             <h1 class ='title'>KẾT QUẢ ĐĂNG KÝ HỌC CỦA SINH VIÊN</h1>
-            <div class="select">
-                <a-select 
-                    v-model="currentOption" 
-                    style="width: 200px"
-                >
-                    <a-select-option value="all">
-                        Tất cả
-                    </a-select-option>
-                    <a-select-option value="class">
-                        Lớp môm học
-                    </a-select-option>
-                    <a-select-option value="teacher">
-                       Giảng viên
-                    </a-select-option>
-                    <a-select-option value="major">
-                        Khoa
-                    </a-select-option>
-                </a-select>
-                <a-icon type="arrow-right" size="lagre"/>
-                <a-select default-value="lucy" style="width: 200px" >
-                    <a-select-option value="jack">
-                        Môn học
-                    </a-select-option>
-                    <a-select-option value="lucy">
-                        Lớp môm học
-                    </a-select-option>
-                    <a-select-option value="disabled">
-                       Giảng viên
-                    </a-select-option>
-                    <a-select-option value="Yiminghe">
-                        CK
-                    </a-select-option>
-                </a-select>
-            </div>
+            <button class="printAll" @click="getAllPdf">Print all</button>
             <TableResultAdmin 
                 :dataList="listRegister" 
             />
             <div class="pagination">
                      <a-pagination :default-current="1" :total="totalRow" @change="onChange" />
                 </div>
-            <button class="printAll" @click="getAllPdf">Print all</button>
         </div>
     
     </div>
@@ -104,10 +70,10 @@ import Navbar from '@/components/common/Navbar'
             margin-bottom: 100px;
         }
         .printAll{
-            margin-top: 50px;
             float: right;
             width: 150px;
             margin-right: 100px;
+            margin-bottom: 20px;
             color: wheat;
             background-color: #1890ff;
             padding: 10px;

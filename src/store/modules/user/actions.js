@@ -1,4 +1,6 @@
 import userService from '../../../services/getData/UserService'
+import commonService from '../../../services/getData/Common'
+
 import router from '../../../router'
 import LocalStorage from '../../../services/cookie_local_storage/Token'
 import handleErrors from '../../../services/handler_error'
@@ -132,6 +134,59 @@ const getPdfFile = ({commit}) => {
   )
 }
 
+
+const createNotify = ({ commit }, data) => {
+  commit('commonModule/loadingTrue')
+  commonService.createNotify(data, () => {
+    commit('commonModule/addListNotifyLocal', data, {root: true})
+    commit('commonModule/loadingFalse', null, {root: true})
+      swalAlert.open({
+            title: 'Thêm thành công thông báo!',
+            text: ` ${data.title}`,
+            icon: 'success'
+          }, () => {
+          })
+  }, e => {
+      commit('commonModule/loadingFalse', null, {root: true})
+    handleErrors.resolveCommonErrors(e)
+  })
+}
+
+
+const getListNotify = ({ commit }) => {
+  commit('commonModule/loadingTrue', null, { root: true })
+  commonService.getListNotify(
+    res => {
+      commit('commonModule/loadingFalse', null, { root: true })
+      console.log(res.data)
+      commit('commonModule/setListNotify', res.data, { root: true })
+    },
+    e => {
+      commit('commonModule/loadingFalse', null, { root: true })
+      handleErrors.resolveCommonErrors(e)
+    }
+  )
+}
+
+const editNotify = ({ commit }, data) => {
+  commit('commonModule/loadingTrue')
+  commonService.updateNotify(data, () => {
+    commit('commonModule/addListNotifyLocal', data, {root: true})
+    commit('commonModule/loadingFalse', null, { root: true })
+    commit('commonModule/updateNotifyLocal', data, { root: true })
+      swalAlert.open({
+            title: 'Cập nhật thành công thông báo!',
+            text: ` ${data.title}`,
+            icon: 'success'
+          }, () => {
+          })
+  }, e => {
+      commit('commonModule/loadingFalse', null, {root: true})
+    handleErrors.resolveCommonErrors(e)
+  })
+}
+
+
 export default {
   login,
   logout,
@@ -140,5 +195,8 @@ export default {
   deleteSubject,
   getListPageRegister,
   fileUploadCsv,
-  getPdfFile
+  getPdfFile,
+  createNotify,
+  getListNotify,
+  editNotify
 }

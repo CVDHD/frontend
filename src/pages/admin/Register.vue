@@ -169,7 +169,10 @@
                         start_class: this.subjectAdd.shift.split('-')[0],
                         end_class: this.subjectAdd.shift.split('-')[0],
                         teacher_id: this.subjectAdd.teacher.split('-')[0],
-                        max_student: this.subjectAdd.count
+                        max_student: this.subjectAdd.count,
+                        subject_name: this.subjectAdd.name.split('-')[1],
+                        CurentStudent: 0,
+                        teacher_name: this.subjectAdd.teacher.split('-')[1]
                     }
                 }
             },

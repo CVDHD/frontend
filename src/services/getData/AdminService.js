@@ -149,6 +149,20 @@ class AdminService {
             onFailure(err)
         }
     }
+    async setTimeRegister(payload,onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.post('setting/setup_register_time',payload))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+    async getTimeRegister(onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.get('setting/get_time'))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
 
 }
 

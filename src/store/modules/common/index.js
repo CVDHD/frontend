@@ -5,7 +5,9 @@ const state = {
     name: '',
     role: '',
     loading: false,
-    totalRow: 0
+    totalRow: 0,
+    timeRegister: [],
+    listNotify: []
 }
 
 export default {

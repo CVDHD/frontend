@@ -17,11 +17,31 @@ const setTotalRow = (state, totalRow) => {
     state.totalRow = totalRow
 }
 
+const setTimeRegister = (state, time) => {
+    state.timeRegister = time
+}
+
+const setListNotify = (state, list) => {
+    state.listNotify = list
+}
+
+const addListNotifyLocal = (state, notify) => {
+    state.listNotify = [...state.listNotify, notify]
+}
+
+const updateNotifyLocal = (state, notify) => {
+    state.listNotify = state.listNotify.map( notifys => notifys.id == notify.id ? notify : notifys)
+}
+
 export default {
     setNameUser,
     setRoleUser,
     loadingFalse,
     loadingTrue,
-    setTotalRow
+    setTotalRow,
+    setTimeRegister,
+    setListNotify,
+    addListNotifyLocal,
+    updateNotifyLocal
 }
 

@@ -214,7 +214,55 @@ const addRegister = ({commit}, data) => {
         handleErrors.resolveCommonErrors(e)
       }
   )
- }
+}
+ 
+const setTimeRegister = ({commit}, data) => {
+  commit('commonModule/loadingTrue', null, { root: true })
+  adminService.setTimeRegister(data,
+    res => {
+      commit('commonModule/loadingFalse', null, { root: true })
+      console.log(res.data.data)
+      commit('commonModule/setTimeRegister', {
+        register_end: res.data.data.end_time,
+        register_start: res.data.data.start_time
+      }, {root: true})
+      swalAlert.open({
+            title: 'Upload thành công!',
+            text: 'Bạn đã upload thành công thời khóa biểu',
+            icon: 'success'
+          }, () => {
+      })
+    },
+    e => {
+        commit('commonModule/loadingFalse', null, { root: true })
+        handleErrors.resolveCommonErrors(e)
+      }
+  )
+}
+ 
+const getTimeRegister = ({ commit }) => {
+  
+    adminService.getTimeRegister(
+      res => {
+      commit('commonModule/setTimeRegister', res.data.data, {root: true})
+    },
+      e => {
+        handleErrors.resolveCommonErrors(e)
+      }
+  )
+}
+
+const getListNotify = ({ commit }) => {
+  
+    adminService.getTimeRegister(
+      res => {
+      commit('commonModule/setTimeRegister', res.data.data, {root: true})
+    },
+      e => {
+        handleErrors.resolveCommonErrors(e)
+      }
+  )
+}
 
 export default {
   getResultRegister,
@@ -229,5 +277,8 @@ export default {
   getAllPdf,
   getFilePdf,
   getAllStudentByClass,
-  addRegister
+  addRegister,
+  setTimeRegister,
+  getTimeRegister,
+  getListNotify
 }

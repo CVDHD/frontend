@@ -29,7 +29,7 @@ class HandleErrors {
         case 403: router.push('/')
           swalAlert.open({
             title: 'Permission denied',
-            text: 'You do not have permission to view this page!',
+            text: e.response.data.message,
             icon: 'warning'
           }, () => {
           })
