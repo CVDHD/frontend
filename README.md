@@ -1,24 +1,12 @@
 # frontend-register-study
 
-## Project setup
+### B1
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### B2
 ```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
+yarn dev
 ```
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
