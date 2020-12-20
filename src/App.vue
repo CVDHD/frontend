@@ -1,6 +1,5 @@
 <template>
   <div id='container'>
-    <h1>V2</h1>
       <loading 
         :active.sync="loadingCommon" 
         :is-full-page="fullPage"

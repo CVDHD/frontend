@@ -3,21 +3,16 @@
   <Navbar />
   <div class="content">
     <h1>Thông báo</h1>
-    <a-button type="primary">Hộp thư đi</a-button>
-    <a-button>Hộp thư đến</a-button>
+    <a-button :type="notifyview == 'to' ? 'primary' : ''" @click="changeNotifyViewTo">{{ button1()}}</a-button>
+    <a-button :type="notifyview == 'from' ? 'primary' : ''" @click="changeNotifyViewFrom">{{button2()}}</a-button>
     <a-button class="new-report" type="primary" @click="showDrawer('Thông báo mới')">Tạo thông báo</a-button>
     <div class="body">
       <div class="report">
           <ListReport 
             :showForm="showDrawer"
             :infoNotify="setInfoNotify"
+            :showListNotify="notifyview"
           />
-          <a-empty
-            :image-style="{
-              height: '800px',
-              width: '800px'
-            }"
-           />
       </div>
       <div class="new-report" ></div>
     </div>
@@ -69,7 +64,8 @@ export default {
       title: '',
       content: '',
       id:'',
-      header: ''
+      header: '',
+      notifyview: 'to'
     }
   },
   components: {
@@ -81,13 +77,30 @@ export default {
       this.visible = true;
       this.header=data
     },
+    button1(){
+      if(localStorage.getItem('role') =='admin') return "Hộp thư đến"
+      else return "Hộp thư đi"
+    },
+    button2(){
+      if(localStorage.getItem('role') =='admin') return "Hộp thư đi"
+      else return "Hộp thư đến"
+    },
+    changeNotifyViewFrom(){
+      this.notifyview = 'from'
+    },
+
+    changeNotifyViewTo(){
+      this.notifyview = 'to'
+    },
     onClose() {
       this.visible = false;
     },
     ...mapActions({
       createNotify: 'userModule/createNotify',
-      getListNotify: 'userModule/getListNotify',
-      editNotify: 'userModule/editNotify'
+      getListNotifyCommon: 'userModule/getListNotify',
+      editNotify: 'userModule/editNotify',
+      getMyListNotify: 'userModule/getMyListNotify',
+      getListNotifyStudent: 'adminModule/getListNotify'
     }),
     async submitNotify(){
       if(this.header == "Chỉnh sửa thông báo"){
@@ -127,7 +140,9 @@ export default {
 
   },
   async mounted(){
-    await this.getListNotify()
+    await this.getListNotifyCommon()
+    await this.getMyListNotify()
+    await this.getListNotifyStudent()
   },
   
 

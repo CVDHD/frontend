@@ -71,6 +71,14 @@ class UserService {
         }
     }
 
+    async getListNotify(onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.get('get_myReq'))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+
 }
 const singletonInstance = new UserService()
 Object.freeze(singletonInstance)

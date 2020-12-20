@@ -48,6 +48,13 @@ const deleteStudentOfClassLocal = (state, student_id) => {
     state.listStudentOfClass = state.listStudentOfClass.filter( student => student.student_id != student_id)
 }
 
+const setListNotify = (state, listNotify) => {
+    state.listNotify = listNotify
+}
+
+const deleteNotify = (state, id) => {
+    state.listNotify = state.listNotify.filter( notify => notify.id != id)
+}
 
 
 export default {
@@ -61,6 +68,8 @@ export default {
     removeListRegisterLocal,
     setListStudentOfClass,
     deleteStudentOfClassLocal,
-    addListRegisterLocal
+    addListRegisterLocal,
+    setListNotify,
+    deleteNotify
 }
 

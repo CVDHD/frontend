@@ -1,6 +1,7 @@
 <template>
 <div >
-  <a-comment v-for="(notify, index) in listNotify" :key="index" class="notify">
+  <div v-if ="showListNotify == 'from'">
+  <a-comment  v-for="(notify, index) in listNotifyCommon" :key="index" class="notify">
     <a-icon type="delete" class="delete" title="Delete"/>
     <a-icon type="edit" class="edit" title="Edit" @click="editNotify(notify.title, notify.content, notify.id)"/>
     <template slot="actions" >
@@ -38,7 +39,47 @@
     </p>
     <hr>
   </a-comment>
-
+  </div>
+  <div v-else>
+  <a-comment  v-for="(notify, index) in listMyNotifyUi" :key="index" class="notify">
+    <a-icon type="delete" class="delete" title="Delete"/>
+    <a-icon type="edit" class="edit" title="Edit" @click="editNotify(notify.title, notify.content, notify.id)"/>
+    <template slot="actions" >
+      <span key="comment-basic-like">
+        <a-tooltip title="Like">
+          <a-icon type="like" :theme="action === 'liked' ? 'filled' : 'outlined'" @click="like" />
+        </a-tooltip>
+        <span style="padding-left: '8px';cursor: 'auto'">
+          {{ likes }}
+        </span>
+      </span>
+      <span key="comment-basic-dislike">
+        <a-tooltip title="Dislike">
+          <a-icon
+            type="dislike"
+            :theme="action === 'disliked' ? 'filled' : 'outlined'"
+            @click="dislike"
+          />
+        </a-tooltip>
+        <span style="padding-left: '8px';cursor: 'auto'">
+          {{ dislikes }}
+        </span>
+      </span>
+      <span key="comment-basic-reply-to">Reply to</span><br>
+      <p>{{notify.updated_at}}</p>
+    </template>
+    <a slot="author">{{notify.title}}</a>
+    <a-avatar
+      slot="avatar"
+      src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+      alt="Han Solo"
+    />
+    <p slot="content">
+      {{notify.content}}
+    </p>
+    <hr>
+  </a-comment>
+  </div>
   </div>
 </template>
 <script>
@@ -51,6 +92,7 @@ export default {
       dislikes: 0,
       action: null,
       moment,
+      listNotifyUi: []
     };
   },
   props:{
@@ -60,6 +102,10 @@ export default {
     },
     infoNotify: {
       type: Function,
+      required: true
+    },
+    showListNotify: {
+      type: String,
       required: true
     }
   },
@@ -84,8 +130,14 @@ export default {
   },
   computed:{
     ...mapGetters({
-      listNotify: 'commonModule/getListNotify'
-    })
+      listNotifyCommon: 'commonModule/getListNotify',
+      listStudentNotify: 'adminModule/getListNotify',
+      myListNotify: 'userModule/getListNotify'
+    }),
+    listMyNotifyUi: function(){
+      if(localStorage.getItem('role') == 'admin')return this.listStudentNotify 
+      else  return this.myListNotify
+    }
   }
 };
 </script>

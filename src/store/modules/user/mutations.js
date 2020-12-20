@@ -29,6 +29,14 @@ const loadingFalse = (state) => {
     state.loading = false
 }
 
+const setListNotify = (state, listNotify) => {
+    state.listNotify = listNotify
+}
+
+const deleteNotify = (state, id) => {
+    state.listNotify = state.listNotify.filter( notify => notify,id != id)
+}
+
 export default {
     removeResultRegisterLocal,
     setListRegister,
@@ -37,6 +45,8 @@ export default {
     setRoleUser,
     addResultRegisterLocal,
     loadingFalse,
-    loadingTrue
+    loadingTrue,
+    setListNotify,
+    deleteNotify
 }
 

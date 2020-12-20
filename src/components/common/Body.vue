@@ -5,10 +5,10 @@
         <div class="text">
            <div class="container">
                <div class="time">
-                   <span>Hiện tại đang trong kỳ đăng ký học</span><br />
-                   <span class="timec">{{timeRegister.register_start}} - {{timeRegister.register_end}}</span>
+                   <span>{{timeRegister.register_end ? 'Đang trong kì đăng ký học' : 'Chưa đến kì đăng ký học'}}</span><br />
+                   <span class="timec" v-if="timeRegister.register_end">{{timeRegister.register_start}} - {{timeRegister.register_end}}</span>
                    <div v-if="getRole">
-                   <a-button v-if="!editTime" type="danger" @click="changeEditTime">Edit</a-button>
+                   <a-button v-if="!editTime " type="danger" @click="changeEditTime">{{timeRegister.register_end ? 'Edit' : 'Add'}}</a-button>
                    <a-button v-if="editTime" type="primary" @click="submitTime">Save</a-button>
                    <a-button type="danger" v-if="editTime" @click="changeEditTime" class="close">Cancel</a-button><br />
                    <a-range-picker v-if="editTime"

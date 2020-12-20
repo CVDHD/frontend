@@ -119,11 +119,11 @@ const getPdfFile = ({commit}) => {
   userService.getFile(
       res => {
         commit('commonModule/loadingFalse', null, { root: true })
-        const fileName = res.headers["content-disposition"].split("filename=")[1]
+        // const fileName = res.headers["content-disposition"].split("filename=")[1]
         const url = window.URL.createObjectURL(new Blob([res.data]));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', fileName);
+        link.setAttribute('download', 'kqdhh.pdf');
         document.body.appendChild(link);
         link.click();
     },
@@ -139,7 +139,8 @@ const createNotify = ({ commit }, data) => {
   commit('commonModule/loadingTrue')
   commonService.createNotify(data, () => {
     commit('commonModule/addListNotifyLocal', data, {root: true})
-    commit('commonModule/loadingFalse', null, {root: true})
+    commit('commonModule/loadingFalse', null, { root: true })
+    location.reload()
       swalAlert.open({
             title: 'Thêm thành công thông báo!',
             text: ` ${data.title}`,
@@ -186,6 +187,20 @@ const editNotify = ({ commit }, data) => {
   })
 }
 
+const getMyListNotify = ({ commit }) => {
+  commit('commonModule/loadingTrue', null, { root: true })
+  userService.getListNotify(
+    res => {
+      commit('commonModule/loadingFalse', null, { root: true })
+      console.log(res.data)
+      commit('userModule/setListNotify', res.data, { root: true })
+    },
+    e => {
+      commit('commonModule/loadingFalse', null, { root: true })
+      handleErrors.resolveCommonErrors(e)
+    }
+  )
+}
 
 export default {
   login,
@@ -198,5 +213,6 @@ export default {
   getPdfFile,
   createNotify,
   getListNotify,
-  editNotify
+  editNotify,
+  getMyListNotify
 }

@@ -40,7 +40,7 @@
         <td v-if="columEdit!==(index+1)">{{data.teacher_name}}</td>
         <td v-else><a-auto-complete
                             v-model="registerEdit.teacher"
-                            :data-source="listTeachers? listTeachers : ''"
+                            :data-source="listTeacher"
                             style="width: 100px"
                             placeholder="Phòng"
                    />
@@ -52,7 +52,7 @@
         <td v-if="columEdit!==(index+1)">{{`${data.start_class} - ${data.end_class}`}}</td>
         <td v-else><input type="text" v-model="registerEdit.time"></td>
         <td class="action">
-          <a-icon :type="columEdit !== (index+1) ? 'edit' : 'save'" @click="changeEdit(index+1)" />
+          <a-icon :type="columEdit !== (index+1) ? 'edit' : 'save'" @click="columEdit !== (index+1) ? changeEdit(index+1) : updateRegister()" />
           <a-icon type="delete" @click="deleteRegister(data.class_id)"/></td>
       </tr>
     </tbody>
@@ -71,8 +71,7 @@ export default {
         day: '',
         time: ''
       },
-      dataEdit: ''
-
+      dataEdit: '',
     }
   },
   props:{
@@ -94,11 +93,14 @@ export default {
   
           getlistTeachers: 'adminModule/getListTeachers',
           getlistRooms: 'adminModule/getListRooms',
-          deleteRegister: 'adminModule/deleteRegister'
+          deleteRegister: 'adminModule/deleteRegister',
+          editRegister: 'adminModule/updateRegister'
     }),
+    
+    async editData(){
+      await this.editRegister({
 
-    async submit(class_id){
-       await this.eventSelect({class_id})
+      })
     },
 
     isChecked(class_id){
@@ -113,6 +115,7 @@ export default {
       this.registerEdit.day= this.dataListRegister[id-1].day
       this.registerEdit.time= this.dataListRegister[id-1].time
       this.registerEdit.max = this.dataListRegister[id-1].max_student
+
     }
   },
   computed: {
@@ -120,6 +123,10 @@ export default {
           listTeachers: 'adminModule/getListTeachers',
           listRooms: 'adminModule/getListRooms'
     })
+    ,
+    listTeacher: function(){
+      return this.listTeachers.map( data => data.name)
+    }
 
   },
   async mounted() {

@@ -6,7 +6,8 @@ const state = {
     name: '',
     role: '',
     resultRegister: [],
-    listRegister: [],
+  listRegister: [],
+    listNotify: []
     
     
 }

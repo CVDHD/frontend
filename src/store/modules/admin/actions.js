@@ -215,6 +215,28 @@ const addRegister = ({commit}, data) => {
       }
   )
 }
+
+const updateRegister = ({commit}, data) => {
+  commit('commonModule/loadingTrue', null, { root: true })
+  adminService.updateRegister(data,
+    res => {
+      console.log(res)
+      commit('commonModule/loadingFalse', null, { root: true })
+      commit('editListRegister', data)
+      swalAlert.open({
+            title: 'Cập nhật thành công!',
+            text: 'Bạn đã cập nhật thành công',
+            icon: 'success'
+          }, () => {
+      })
+      
+    },
+    e => {
+        commit('commonModule/loadingFalse', null, { root: true })
+        handleErrors.resolveCommonErrors(e)
+      }
+  )
+}
  
 const setTimeRegister = ({commit}, data) => {
   commit('commonModule/loadingTrue', null, { root: true })
@@ -254,9 +276,9 @@ const getTimeRegister = ({ commit }) => {
 
 const getListNotify = ({ commit }) => {
   
-    adminService.getTimeRegister(
+    adminService.getListNotify(
       res => {
-      commit('commonModule/setTimeRegister', res.data.data, {root: true})
+      commit('setListNotify', res.data)
     },
       e => {
         handleErrors.resolveCommonErrors(e)
@@ -280,5 +302,6 @@ export default {
   addRegister,
   setTimeRegister,
   getTimeRegister,
-  getListNotify
+  getListNotify,
+  updateRegister
 }

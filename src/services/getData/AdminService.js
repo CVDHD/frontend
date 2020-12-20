@@ -163,6 +163,20 @@ class AdminService {
             onFailure(err)
         }
     }
+    async getListNotify(onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.get('list_req'))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+    async updateRegister(onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.put('update-register'))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
 
 }
 

@@ -27,7 +27,7 @@ class CommonService {
 
     async getListNotify(onSuccess, onFailure) {
         try {
-            onSuccess(await httpHandler.get('list_req'))
+            onSuccess(await httpHandler.get('list_notify'))
         } catch (err) {
             onFailure(err)
         }
@@ -42,6 +42,14 @@ class CommonService {
     }
 
     async updateNotify(data,onSuccess, onFailure) {
+        try {
+            onSuccess(await httpHandler.post('updatenotify', data))
+        } catch (err) {
+            onFailure(err)
+        }
+    }
+
+    async deleteNotify(data,onSuccess, onFailure) {
         try {
             onSuccess(await httpHandler.post('updatenotify', data))
         } catch (err) {
